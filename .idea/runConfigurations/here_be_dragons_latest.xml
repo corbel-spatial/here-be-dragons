@@ -1,0 +1,41 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="here-be-dragons:latest" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="ghcr.io/corbel-spatial/here-be-dragons:latest" />
+        <option name="buildArgs">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="PYTHON_VER" />
+              <option name="value" value="v3.14.0" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="GEOS_VER" />
+              <option name="value" value="3.14.0" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="PARALLEL" />
+              <option name="value" value="16" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="PROJ_VER" />
+              <option name="value" value="9.7.0" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="GDAL_VER" />
+              <option name="value" value="v3.11.4" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="ARROW_VER" />
+              <option name="value" value="apache-arrow-21.0.0" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="containerName" value="" />
+        <option name="showCommandPreview" value="true" />
+        <option name="sourceFilePath" value="latest/Dockerfile" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>
