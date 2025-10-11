@@ -27,7 +27,7 @@ uv pip list
 `geopandas` and common dependencies are pre-installed, which you can check with:
 
 ```shell
-    python -c "import geopandas; geopandas.show_versions()"
+python -c "import geopandas; geopandas.show_versions()"
 ```
 
 To install additional packages use `uv pip install --system`, for example:
@@ -38,11 +38,11 @@ uv pip install --system geojson duckdb sedonadb
 These are the current included versions of the binaries and the packages built with them:
 
 | Binary Source  |               Python Packages               |
-|----------------|:-------------------------------------------:|
+|:--------------:|:-------------------------------------------:|
 | Arrow (21.0.0) | pyarrow (21.0.0)<br/>geoarrow-pyarrow (0.2) |
 | GDAL (3.11.4)  |                gdal (3.11.4)                |
 | GEOS (3.14.0)  |               shapely (2.1.2)               |
-| PROJ (9.7.0)   |      gdal (3.11.4)<br/>pyproj (3.7.2)       |
+|  PROJ (9.7.0)  |      gdal (3.11.4)<br/>pyproj (3.7.2)       |
 
 ## Next 🔥 Python 3.15 
 
@@ -59,8 +59,8 @@ docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragon
     ⚠ Note: Arrow cannot yet build successfully on Python 3.15 so it is not included ⚠
 
 | Binary Source |         Python Packages          |
-|---------------|:--------------------------------:|
-| Arrow         |                🚧                |
+|:-------------:|:--------------------------------:|
+|     Arrow     |                🚧                |
 | GDAL (3.11.4) |          gdal (3.11.4)           |
 | GEOS (3.14.0) |         shapely (2.1.2)          |
 | PROJ (9.7.0)  | gdal (3.11.4)<br/>pyproj (3.7.2) |
