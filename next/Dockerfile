@@ -1,6 +1,14 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:latest AS builder
 
+LABEL org.opencontainers.image.base.name=docker.io/ubuntu:latest
+LABEL org.opencontainers.image.source=https://github.com/corbel-spatial/here-be-dragons
+LABEL org.opencontainers.image.documentation=https://here-be-dragons.readthedocs.io/
+LABEL org.opencontainers.image.title="here-be-dragons:next"
+LABEL org.opencontainers.image.description="Docker image for bleeding-edge spatial data analysis in Python"
+LABEL org.opencontainers.image.licenses=MIT
+LABEL org.opencontainers.image.authors="dev@corbelspatial.com"
+
 # Build system dependencies
 FROM builder AS build-sysdeps
 ARG PARALLEL
