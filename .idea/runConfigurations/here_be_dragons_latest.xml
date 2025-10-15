@@ -31,6 +31,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
+        <option name="buildCliOptions" value="--no-cache " />
         <option name="containerName" value="" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="latest/Dockerfile" />

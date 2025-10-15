@@ -107,8 +107,6 @@ RUN \
     rm -rd $BUILDS/gdal && \
     python3 -c "from osgeo import gdal; print(gdal.__version__)"
 
-# TODO https://arrow.apache.org/docs/developers/python.html#installing-nightly-packages
-
 FROM build-gdal AS install-pixi
 #RUN apt update && apt install -y --no-install-recommends \
 #    curl
@@ -123,4 +121,3 @@ RUN \
     ln -s /usr/local/bin/python3 /usr/bin/python && \
     ln -s /usr/local/bin/pip3 /usr/local/bin/pip && \
     ln -s /usr/local/bin/pip3 /usr/bin/pip
-
