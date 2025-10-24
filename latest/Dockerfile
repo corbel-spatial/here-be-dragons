@@ -45,7 +45,7 @@ ARG PYTHON_VER
 RUN git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython
 RUN \
     cd $BUILDS/cpython && \
-    ./configure && \
+    ./configure --enable-optimizations --with-lto && \
     make -j $PARALLEL && \
     make test -j $PARALLEL && \
     make install && \
