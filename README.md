@@ -54,7 +54,7 @@ These are the current included versions of the binaries and the packages built w
 
 | Binary Source  |               Python Packages               |
 |:--------------:|:-------------------------------------------:|
-| Arrow (21.0.0) | pyarrow (21.0.0)<br/>geoarrow-pyarrow (0.2) |
+| Arrow (22.0.0) | pyarrow (21.0.0)<br/>geoarrow-pyarrow (0.2) |
 | GDAL (3.11.4)  |                gdal (3.11.4)                |
 | GEOS (3.14.0)  |               shapely (2.1.2)               |
 |  PROJ (9.7.0)  |      gdal (3.11.4)<br/>pyproj (3.7.2)       |

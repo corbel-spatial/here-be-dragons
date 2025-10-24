@@ -12,7 +12,7 @@ docker build \
     --build-arg PARALLEL=4 \
     --build-arg PROJ_VER=9.7.0 \
     --build-arg GDAL_VER=v3.11.4 \
-    --build-arg ARROW_VER=apache-arrow-21.0.0 \
+    --build-arg ARROW_VER=apache-arrow-22.0.0 \
     -f Dockerfile -t here-be-dragons:latest . && \
 docker run -it here-be-dragons:latest
 ```

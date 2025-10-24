@@ -27,11 +27,10 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ARROW_VER" />
-              <option name="value" value="apache-arrow-22.0.0-rc0" />
+              <option name="value" value="apache-arrow-22.0.0" />
             </DockerEnvVarImpl>
           </list>
         </option>
-        <option name="buildCliOptions" value="--no-cache" />
         <option name="containerName" value="" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="next/Dockerfile" />

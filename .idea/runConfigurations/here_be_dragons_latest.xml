@@ -27,7 +27,7 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ARROW_VER" />
-              <option name="value" value="apache-arrow-21.0.0" />
+              <option name="value" value="apache-arrow-22.0.0" />
             </DockerEnvVarImpl>
           </list>
         </option>
