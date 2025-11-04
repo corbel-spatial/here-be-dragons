@@ -31,7 +31,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
-        <option name="buildCliOptions" value="--no-cache" />
+        <option name="buildCliOptions" value="--no-cache --tag=ghcr.io/corbel-spatial/here-be-dragons:py3.15.0a1 --tag=ghcr.io/corbel-spatial/here-be-dragons:py3.15 --tag=ghcr.io/corbel-spatial/here-be-dragons:experimental" />
         <option name="containerName" value="" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="next/Dockerfile" />
