@@ -110,7 +110,7 @@ RUN \
     make -j $PARALLEL && \
     make install && \
     ldconfig && \
-    uv pip install --system gdal --no-binary :all: && \
+    uv pip install --system gdal==$GDAL_VER --no-binary :all: && \
     cd $BUILDS && \
     rm -rd $BUILDS/gdal && \
     python3 -c "from osgeo import gdal; print(gdal.__version__)"

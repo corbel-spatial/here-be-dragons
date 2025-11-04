@@ -23,7 +23,7 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="GDAL_VER" />
-              <option name="value" value="v3.11.4" />
+              <option name="value" value="v3.11.5" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ARROW_VER" />
@@ -31,6 +31,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
+        <option name="buildCliOptions" value="--no-cache" />
         <option name="containerName" value="" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="next/Dockerfile" />
