@@ -23,7 +23,7 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="GDAL_VER" />
-              <option name="value" value="v3.11.5" />
+              <option name="value" value="v3.12.0" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ARROW_VER" />
