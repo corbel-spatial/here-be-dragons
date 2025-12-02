@@ -7,11 +7,11 @@
           <list>
             <DockerEnvVarImpl>
               <option name="name" value="PYTHON_VER" />
-              <option name="value" value="v3.14.0" />
+              <option name="value" value="v3.14.1" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="GEOS_VER" />
-              <option name="value" value="3.14.0" />
+              <option name="value" value="3.14.1" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="PARALLEL" />
@@ -19,7 +19,7 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="PROJ_VER" />
-              <option name="value" value="9.7.0" />
+              <option name="value" value="9.7.1" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="GDAL_VER" />
@@ -31,7 +31,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
-        <option name="buildCliOptions" value="--no-cache --tag=ghcr.io/corbel-spatial/here-be-dragons:stable --tag=ghcr.io/corbel-spatial/here-be-dragons:py3.14 --tag=ghcr.io/corbel-spatial/here-be-dragons:py3.14.0" />
+        <option name="buildCliOptions" value="--no-cache --tag=ghcr.io/corbel-spatial/here-be-dragons:stable --tag=ghcr.io/corbel-spatial/here-be-dragons:py3.14 --tag=ghcr.io/corbel-spatial/here-be-dragons:py3.14.1" />
         <option name="containerName" value="" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="latest/Dockerfile" />

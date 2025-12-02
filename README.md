@@ -15,7 +15,7 @@ You will need to [install Docker](https://www.docker.com/get-started/).
 
 On Windows, we recommend using [Docker Desktop and Windows Subsystem for Linux (WSL)](https://docs.docker.com/desktop/features/wsl/).
 
-## Latest 🐍 Python 3.14.0
+## Latest 🐍 Python 3.14.1
 
 This is the **stable** version intended for production work. 
 
@@ -56,8 +56,8 @@ These are the current included versions of the binaries and the packages built w
 |:--------------:|:-------------------------------------------:|
 | Arrow (22.0.0) | pyarrow (22.0.0)<br/>geoarrow-pyarrow (0.2) |
 | GDAL (3.12.0)  |            osgeo / gdal (3.12.0)            |
-| GEOS (3.14.0)  |               shapely (2.1.2)               |
-|  PROJ (9.7.0)  |      gdal (3.12.0)<br/>pyproj (3.7.2)       |
+| GEOS (3.14.1)  |               shapely (2.1.2)               |
+|  PROJ (9.7.1)  |      gdal (3.12.0)<br/>pyproj (3.7.2)       |
 
 ## Next 🔥 Python 3.15.0a1
 
