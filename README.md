@@ -15,7 +15,7 @@ You will need to [install Docker](https://www.docker.com/get-started/).
 
 On Windows, we recommend using [Docker Desktop and Windows Subsystem for Linux (WSL)](https://docs.docker.com/desktop/features/wsl/).
 
-## Latest 🐍 Python 3.14.1
+## Latest 🐍 Python 3.14.2
 
 This is the **stable** version intended for production work. 
 
