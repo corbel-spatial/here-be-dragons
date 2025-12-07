@@ -59,26 +59,23 @@ These are the current included versions of the binaries and the packages built w
 | GEOS (3.14.1)  |               shapely (2.1.2)               |
 |  PROJ (9.7.1)  |      gdal (3.12.0)<br/>pyproj (3.7.2)       |
 
-## Next 🔥 Python 3.15.0a1
+## Next 🔥 Python 3.15.0a2+
 
 This is the **experimental** version intended for testing Arrow, GDAL, GEOS, and PROJ
 against the latest pre-release version of Python, and with and other packages in development.
 
-The extra Python packages (`geopandas`, etc.) are not included.
 Unstable source branches will be used if they are needed for a successful build.
 
 ```shell
 docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragons:next
 ```
 
-:warning: Note: Arrow cannot yet build successfully on Python 3.15 so it is not included :warning:
-
-| Binary Source |         Python Packages          |
-|:-------------:|:--------------------------------:|
-|     Arrow     |                🚧                |
-| GDAL (3.12.0) |      osgeo / gdal (3.12.0)       |
-| GEOS (3.14.0) |         shapely (2.1.2)          |
-| PROJ (9.7.0)  | gdal (3.12.0)<br/>pyproj (3.7.2) |
+|     Binary Source      |                   Python Packages                   |
+|:----------------------:|:---------------------------------------------------:|
+| Arrow (23.0.0a1.dev1+) | pyarrow (23.0.0a1.dev1+)<br/>geoarrow-pyarrow (0.2) |
+|     GDAL (3.12.0)      |                osgeo / gdal (3.12.0)                |
+|     GEOS (3.14.1)      |                   shapely (2.1.2)                   |
+|      PROJ (9.7.1)      |          gdal (3.12.0)<br/>pyproj (3.7.2)           |
 
 ## 📑 References 
 

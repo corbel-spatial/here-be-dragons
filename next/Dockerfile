@@ -21,10 +21,12 @@ RUN \
     apt upgrade -y && \
     apt build-dep python3 -y && \
     apt install -y --no-install-recommends \
-        build-essential ca-certificates cmake curl git gdb inetutils-inetd lcov \
-        libbz2-dev libcurl4-openssl-dev libcurlpp-dev libjpeg-dev libffi-dev libgdbm-dev libgdbm-compat-dev libgeos-dev libgeotiff-dev libgif-dev \
-        liblzma-dev libncurses5-dev libpng-dev libpq-dev libproj-dev libreadline6-dev libsqlite3-dev libssl-dev libtiff5-dev libzstd-dev \
-        lzma lzma-dev pkg-config python-is-python3 sqlite3 tk-dev uuid-dev wget zlib1g-dev && \
+        build-essential ca-certificates cmake curl g++ gcc gdb git gfortran inetutils-inetd lcov \
+        libbz2-dev libcurl4-openssl-dev libcurlpp-dev libjpeg-dev libffi-dev libgdbm-dev libgdbm-compat-dev \
+        libgeos-dev libgeotiff-dev libgif-dev liblapack-dev liblzma-dev libncurses5-dev libopenblas-dev \
+        libpng-dev libpq-dev libproj-dev libreadline6-dev libsqlite3-dev libssl-dev libtiff5-dev libzstd-dev \
+        lzma lzma-dev ninja-build pkg-config python-is-python3 python3-dev python3-pip sqlite3 tk-dev uuid-dev \
+        wget zlib1g-dev && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -42,7 +44,8 @@ ARG PYTHON_VER
 #          libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
 #          libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
 #          lzma lzma-dev tk-dev uuid-dev zlib1g-dev libzstd-dev inetutils-inetd
-RUN git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython
+RUN #git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython
+RUN git clone --depth 1 https://github.com/python/cpython
 RUN \
     cd $BUILDS/cpython && \
     ./configure && \
@@ -115,17 +118,66 @@ RUN \
     rm -rd $BUILDS/gdal && \
     python3 -c "from osgeo import gdal; print(gdal.__version__)"
 
-FROM build-gdal AS install-pixi
+## Build Arrow
+## https://arrow.apache.org/docs/developers/python.html#building-on-linux-and-macos
+FROM build-gdal AS build-arrow
+ARG ARROW_VER
+ENV ARROW_DIR=$BUILDS/arrow
+ENV PARQUET_TEST_DATA=$ARROW_DIR/cpp/submodules/parquet-testing/data
+ENV ARROW_TEST_DATA=$ARROW_DIR/testing/data
+ENV ARROW_HOME=$ARROW_DIR/dist
+ENV LD_LIBRARY_PATH=$ARROW_DIR/dist/lib
+ENV CMAKE_PREFIX_PATH=$ARROW_HOME
+ENV PYARROW_PARALLEL=$PARALLEL
+ENV PYARROW_BUNDLE_ARROW_CPP=1
+#RUN apt update && apt install -y --no-install-recommends \
+#    git ca-certificates cmake build-essential ninja-build python3-dev
+#RUN git clone --depth 1 --branch $ARROW_VER --single-branch https://github.com/apache/arrow
+RUN git clone --depth 1 https://github.com/apache/arrow
+RUN mkdir $ARROW_HOME && \
+    cd $ARROW_HOME && \
+    uv pip install --system -r $ARROW_DIR/python/requirements-build.txt && \
+    cmake -S $ARROW_DIR/cpp -B $ARROW_DIR/cpp/build \
+        -DCMAKE_INSTALL_PREFIX=$ARROW_HOME \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        --preset ninja-release-python && \
+    cmake --build $ARROW_DIR/cpp/build --target install --parallel $PARALLEL && \
+    ldconfig && \
+    cd $ARROW_DIR/python && \
+    uv pip install --system . && \
+    cd $BUILDS && \
+    python3 -c "import pyarrow; print(pyarrow.__version__)" && \
+    rm -rd $BUILDS/arrow
+RUN \
+    uv pip install --system \
+        geoarrow-pyarrow --no-binary :all:
+
+FROM build-arrow AS install-pixi
 #RUN apt update && apt install -y --no-install-recommends \
 #    curl
 RUN curl -fsSL https://pixi.sh/install.sh | sh
 ENV PATH=$HOME/.pixi/bin:$PATH
 
-FROM install-pixi AS cleanup
+FROM install-pixi AS install-gis
+#RUN apt update && apt install -y --no-install-recommends \
+#    libpq-dev
+RUN \
+    uv pip install --system \
+        fiona \
+        geoalchemy2 \
+        geopandas \
+        geopy \
+        matplotlib \
+        mapclassify \
+        psycopg \
+        psycopg2
+
+FROM install-gis AS cleanup
 WORKDIR $HOME
 RUN \
     rm -rd $BUILDS && \
     rm /usr/bin/python && \
     ln -s /usr/local/bin/python3 /usr/bin/python && \
+    rm /usr/bin/pip && \
     ln -s /usr/local/bin/pip3 /usr/local/bin/pip && \
     ln -s /usr/local/bin/pip3 /usr/bin/pip
