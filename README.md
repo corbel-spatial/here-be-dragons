@@ -59,10 +59,11 @@ These are the current included versions of the binaries and the packages built w
 | GEOS (3.14.1)  |               shapely (2.1.2)               |
 |  PROJ (9.7.1)  |      gdal (3.12.0)<br/>pyproj (3.7.2)       |
 
-## Next 🔥 Python 3.15.0a2+
+## Next 🔥 Python 3.15.0a3
 
 This is the **experimental** version intended for testing Arrow, GDAL, GEOS, and PROJ
-against the latest pre-release version of Python, and with and other packages in development.
+against the latest pre-release version of Python. It's useful for testing other packages in development
+with this suite of dependencies.
 
 Unstable source branches will be used if they are needed for a successful build.
 

@@ -44,8 +44,7 @@ ARG PYTHON_VER
 #          libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
 #          libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
 #          lzma lzma-dev tk-dev uuid-dev zlib1g-dev libzstd-dev inetutils-inetd
-RUN #git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython
-RUN git clone --depth 1 https://github.com/python/cpython
+RUN git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython
 RUN \
     cd $BUILDS/cpython && \
     ./configure && \
