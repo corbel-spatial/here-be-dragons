@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:latest AS builder
+FROM ubuntu:rolling AS builder
 
 LABEL org.opencontainers.image.base.name=docker.io/ubuntu:latest
 LABEL org.opencontainers.image.source=https://github.com/corbel-spatial/here-be-dragons
@@ -25,7 +25,7 @@ RUN \
         libbz2-dev libcurl4-openssl-dev libcurlpp-dev libjpeg-dev libffi-dev libgdbm-dev libgdbm-compat-dev \
         libgeos-dev libgeotiff-dev libgif-dev liblapack-dev liblzma-dev libncurses5-dev libopenblas-dev \
         libpng-dev libpq-dev libproj-dev libreadline6-dev libsqlite3-dev libssl-dev libtiff5-dev libzstd-dev \
-        lzma lzma-dev ninja-build pkg-config python-is-python3 python3-dev python3-pip sqlite3 tk-dev uuid-dev \
+        lzma ninja-build pkg-config python-is-python3 python3-dev python3-pip sqlite3 tk-dev uuid-dev \
         wget zlib1g-dev && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*

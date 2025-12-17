@@ -17,7 +17,7 @@ On Windows, we recommend using [Docker Desktop and Windows Subsystem for Linux (
 
 ## Latest 🐍 Python 3.14.2
 
-This is the **stable** version intended for production work. 
+This is the **stable** version intended for production work. The image is built on top of Ubuntu 24.04 LTS (`ubuntu:latest`).
 
 To pull and start the container in your terminal:
 
@@ -63,7 +63,7 @@ These are the current included versions of the binaries and the packages built w
 
 This is the **experimental** version intended for testing Arrow, GDAL, GEOS, and PROJ
 against the latest pre-release version of Python. It's useful for testing other packages in development
-with this suite of dependencies.
+with this suite of dependencies. The image is built on top of Ubuntu 25.10 (`ubuntu:rolling`).
 
 Unstable source branches will be used if they are needed for a successful build.
 
