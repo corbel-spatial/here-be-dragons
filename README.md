@@ -55,7 +55,7 @@ These are the current included versions of the binaries and the packages built w
 | Binary Source  |               Python Packages               |
 |:--------------:|:-------------------------------------------:|
 | Arrow (22.0.0) | pyarrow (22.0.0)<br/>geoarrow-pyarrow (0.2) |
-| GDAL (3.12.0)  |            osgeo / gdal (3.12.0)            |
+| GDAL (3.12.1)  |            osgeo / gdal (3.12.1)            |
 | GEOS (3.14.1)  |               shapely (2.1.2)               |
 |  PROJ (9.7.1)  |      gdal (3.12.0)<br/>pyproj (3.7.2)       |
 
@@ -74,7 +74,7 @@ docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragon
 |     Binary Source      |                   Python Packages                   |
 |:----------------------:|:---------------------------------------------------:|
 | Arrow (23.0.0a1.dev1+) | pyarrow (23.0.0a1.dev1+)<br/>geoarrow-pyarrow (0.2) |
-|     GDAL (3.12.0)      |                osgeo / gdal (3.12.0)                |
+|     GDAL (3.12.1)      |                osgeo / gdal (3.12.1)                |
 |     GEOS (3.14.1)      |                   shapely (2.1.2)                   |
 |      PROJ (9.7.1)      |          gdal (3.12.0)<br/>pyproj (3.7.2)           |
 
