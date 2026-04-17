@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join("..", "src")))
 # -- Project information -----------------------------------------------------
 
 project = "here-be-dragons"
-copyright = "2025"
+copyright = "2026"  # noqa
 author = "Peter Von der Porten"
 
 
