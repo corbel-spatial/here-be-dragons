@@ -1,0 +1,32 @@
+name: Update Build Push - Latest
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.9.4
+        with:
+          pixi-version: v0.67.0
+
+      - name: Run build-ci
+        run:
+          pixi run build-ci --latest --user ${{ github.actor }} --token ${{ secrets.GITHUB_TOKEN }} --parallel 4
+
+      - name: Commit version.toml
+        run: |
+          git config --local user.email "dev@corbelspatial.com"
+          git config --local user.name "GitHub Actions"
+          git add ./version.toml
+          git commit -m "GitHub Action: Update Build Push - Latest -> Bump Versions"
+          git push

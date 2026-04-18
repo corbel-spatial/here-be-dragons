@@ -25,10 +25,11 @@ RUN \
         libbz2-dev libcurl4-openssl-dev libcurlpp-dev libjpeg-dev libffi-dev libgdbm-dev libgdbm-compat-dev \
         libgeos-dev libgeotiff-dev libgif-dev liblapack-dev liblzma-dev libncurses5-dev libopenblas-dev \
         libpng-dev libpq-dev libproj-dev libreadline6-dev libsqlite3-dev libssl-dev libtiff5-dev libzstd-dev \
-        lzma ninja-build pkg-config python-is-python3 python3-dev python3-pip sqlite3 tk-dev uuid-dev \
+        lzma ninja-build pkg-config python-is-python3 python3-dev python3-pip rustup sqlite3 tk-dev uuid-dev \
         wget zlib1g-dev && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
+RUN rustup default stable
 
 # Build Python
 # https://devguide.python.org/getting-started/setup-building/#build-dependencies
@@ -129,8 +130,10 @@ ENV LD_LIBRARY_PATH=$ARROW_DIR/dist/lib
 ENV CMAKE_PREFIX_PATH=$ARROW_HOME
 ENV PYARROW_PARALLEL=$PARALLEL
 ENV PYARROW_BUNDLE_ARROW_CPP=1
+ENV PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1
 #RUN apt update && apt install -y --no-install-recommends \
-#    git ca-certificates cmake build-essential ninja-build python3-dev
+#    git ca-certificates cmake build-essential ninja-build python3-dev rustup && \
+#    rustup default stable
 #RUN git clone --depth 1 --branch $ARROW_VER --single-branch https://github.com/apache/arrow
 RUN git clone --depth 1 https://github.com/apache/arrow
 RUN mkdir $ARROW_HOME && \

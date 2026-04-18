@@ -18,6 +18,7 @@ tomlkit = ">=0.14.0,<0.15"
 
 [tasks]
 build = "python ./scripts/build.py"
+build-ci = "python ./scripts/ci.py"
 docs = "make -C docs html"
 lint = "ruff check scripts/ --fix"
 update = "python scripts/update.py"

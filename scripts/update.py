@@ -132,12 +132,9 @@ def _update_version(
     pkg: str,
     version: str,
     tag: Literal["latest", "next"],
-    project_root: Path | None = None,
 ) -> None:
     """Replace the package version in versions.toml and README.md."""
-    if project_root is None:
-        project_root = Path(__file__).parent.parent
-    versions_file = project_root / "versions.toml"
+    versions_file = Path(__file__).parent.parent / "versions.toml"
 
     with open(versions_file, "rb") as f:
         versions: dict[str, dict[str, str]] = tomlkit.load(f)
@@ -153,20 +150,29 @@ def _update_version(
 def update_latest(
     pkg: str,
     version: str,
-    project_root: Path | None = None,
 ) -> None:
-    _update_version(pkg, version, "latest", project_root)
+    _update_version(
+        pkg,
+        version,
+        "latest",
+    )
 
 
 def update_next(
     pkg: str,
     version: str,
-    project_root: Path | None = None,
 ) -> None:
-    _update_version(pkg, version, "next", project_root)
+    _update_version(
+        pkg,
+        version,
+        "next",
+    )
 
 
-def main(token: str | None = None, dry_run: bool = False) -> None:
+def main(
+    dry_run: bool = False,
+    token: str | None = None,
+) -> bool:
     print("Here Be Dragons - Check and Update Releases\n")
 
     project_root = Path(__file__).parent.parent
@@ -200,6 +206,7 @@ def main(token: str | None = None, dry_run: bool = False) -> None:
 
     print("\n\nChecking for new versions. ..")
 
+    updated = False
     for repo_path, pkg in REPOS:
         print(f"\nFetching {pkg} releases from https://github.com/{repo_path}")
 
@@ -218,6 +225,7 @@ def main(token: str | None = None, dry_run: bool = False) -> None:
             next_release = "v" + next_release.replace("-", "")
 
         if latest_release != latest_lookup_pkg:
+            updated = True
             print(f" - {pkg} latest {latest_lookup_pkg} -> {latest_release}")
             if dry_run:
                 print("       [DRY RUN] Would update to: " + latest_release)
@@ -227,6 +235,7 @@ def main(token: str | None = None, dry_run: bool = False) -> None:
             print(f" - New stable version not found, currently {latest_release}")
 
         if next_release != next_lookup_pkg:
+            updated = True
             print(f" - {pkg} next {next_lookup_pkg} -> {next_release}")
             if dry_run:
                 print("       [DRY RUN] Would update to: " + next_release)
@@ -237,11 +246,11 @@ def main(token: str | None = None, dry_run: bool = False) -> None:
 
         sleep(1)
 
+    return updated
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Here Be Dragons - Check and Update Releases"
-    )
+    parser = argparse.ArgumentParser(description="Here Be Dragons - Update")
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -254,4 +263,5 @@ if __name__ == "__main__":
         help="GitHub token for API requests",
     )
     args = parser.parse_args()
-    main(token=args.token, dry_run=args.dry_run)
+
+    main(dry_run=args.dry_run, token=args.token)
