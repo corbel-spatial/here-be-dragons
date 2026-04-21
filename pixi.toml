@@ -1,0 +1,27 @@
+[workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "linux-aarch64"]
+
+[dependencies]  # should include everything in docs/requirements.txt
+jupyter = ">=1.1.1,<2"
+myst-parser = ">=5.0.0,<6"
+nbsphinx = ">=0.9.8,<0.10"
+notebook = ">=7.5.5,<8"
+pixi-pycharm = ">=0.0.11,<0.0.12"
+pydata-sphinx-theme = ">=0.17.0,<0.18"
+pygithub = ">=2.9.1,<3"
+ruff = ">=0.15.11,<0.16"
+semver = ">=3.0.4,<4"
+sphinx = ">=9.1.0,<10"
+sphinx-copybutton = ">=0.5.2,<0.6"
+tomlkit = ">=0.14.0,<0.15"
+
+[tasks]
+build = "python ./scripts/build.py"
+build-ci = "python ./scripts/ci.py"
+docs = "make -C docs html"
+lint = "ruff check scripts/ --fix"
+update = "python scripts/update.py"
+
+[environments]
+default = ["default"]
