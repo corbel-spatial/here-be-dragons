@@ -20,6 +20,17 @@ jobs:
           pixi-version: v0.67.0
           cache: true
 
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/buildkit-cache
+          key: buildkit-amd64-latest-${{ github.sha }}
+          restore-keys: buildkit-amd64-latest-
+      - uses: reproducible-containers/buildkit-cache-dance@v3.1.2
+        with:
+          cache-source: /tmp/buildkit-cache
+          cache-map: |
+            { "ccache-amd64": "ccache", "uv-cache": "uv" }
+
       - name: Run build
         run: |
           pixi run build --amd --push --next --user ${{ github.actor }} --token ${{ secrets.GITHUB_TOKEN }} --parallel 8

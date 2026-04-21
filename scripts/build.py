@@ -64,8 +64,15 @@ def build_dockerfile(
 
     is_ci = os.getenv("GITHUB_ACTIONS") == "true"
     if is_ci:
-        # Tell GitHub runners to pull from and push to the internal GHA cache
-        arg_list.extend(["--cache-from", "type=gha", "--cache-to", "type=gha,mode=max"])
+        cache_scope = f"{tag}-{platform.replace('/', '-')}"
+        arg_list.extend(
+            [
+                "--cache-from",
+                f"type=gha,scope={cache_scope}",
+                "--cache-to",
+                f"type=gha,scope={cache_scope}",
+            ]
+        )
     else:
         # Local builds keep use the registry (GHCR)
         arg_list.extend(
