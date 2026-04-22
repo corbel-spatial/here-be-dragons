@@ -1,0 +1,35 @@
+services:
+  base:
+    image: ghcr.io/corbel-spatial/here-be-dragons:base
+    build:
+      args:
+        - PARALLEL=${PARALLEL:-2}
+        - GEOS_VER=${GEOS_VER:-3.14.1}
+        - PROJ_VER=${PROJ_VER:-9.8.1}
+      dockerfile: base.Dockerfile
+
+  latest:
+    image: ghcr.io/corbel-spatial/here-be-dragons:latest
+    build:
+      args:
+        - ARROW_VER=${ARROW_VER_LATEST:-apache-arrow-24.0.0}
+        - GDAL_VER=${GDAL_VER_LATEST:-v3.12.3}
+        - PARALLEL=${PARALLEL:-2}
+        - PYTHON_VER=${PYTHON_VER_LATEST:-v3.14.4}
+        - TAG=latest
+      dockerfile: build.Dockerfile
+    depends_on:
+      - base
+
+  next:
+    image: ghcr.io/corbel-spatial/here-be-dragons:next
+    build:
+      args:
+        - ARROW_VER=${ARROW_VER_NEXT:-apache-arrow-24.0.0}
+        - GDAL_VER=${GDAL_VER_NEXT:-v3.13.0beta2}
+        - PARALLEL=${PARALLEL:-2}
+        - PYTHON_VER=${PYTHON_VER_NEXT:-v3.15.0a8}
+        - TAG=next
+      dockerfile: build.Dockerfile
+    depends_on:
+      - base

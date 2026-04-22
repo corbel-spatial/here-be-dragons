@@ -12,7 +12,10 @@ semver = ">=3.0.4,<4"
 tomlkit = ">=0.14.0,<0.15"
 
 [feature.build.tasks]
-build = "python ./docker/build.py"
+build = { depends-on = ["build-base", "build-latest", "build-next"] }
+build-base = "docker compose --project-directory docker build base"
+build-latest = { cmd = "docker compose --project-directory docker build latest" }
+build-next = { cmd = "docker compose --project-directory docker build next" }
 build-ci = "python ./scripts/ci.py"
 lint = "ruff check scripts/ --fix"
 update = "python scripts/update.py"
