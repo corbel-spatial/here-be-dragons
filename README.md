@@ -4,7 +4,7 @@ A helpful Docker image for bleeding-edge spatial data analysis in Python.
 
 Tricky dependencies are built from source so you can run the latest geoprocessing libraries that depend on Python, Arrow, GDAL, GEOS, and PROJ.
 
-The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`). The Python package managers `uv` and `Pixi` are pre-installed.
+The Python package manager `uv` is pre-installed and is the recommended way to install additional packages.
 
 > [!TIP]
 > You will need to install [Docker](https://www.docker.com/get-started/). On Windows, running [Docker Desktop](https://docs.docker.com/desktop/features/wsl/) with [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) is recommended.
@@ -22,7 +22,16 @@ The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](#)
 [![Pixi Badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
 
-This Docker image is the **stable** version intended for production work with common geospatial libraries in the latest version of Python.
+![GitHub Actions Workflow Status - Latest amd64](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-latest-amd64.yml?style=flat-square&label=amd64)
+![GitHub Actions Workflow Status - Latest arm64](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-latest-arm64.yml?style=flat-square&label=arm64)
+![Arrow Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.latest.ARROW&style=flat-square&logo=apache&logoColor=purple&label=arrow)
+![GDAL Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.latest.GDAL&style=flat-square&logo=gdal&logoColor=green&label=gdal)
+![GEOS Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.latest.GEOS&style=flat-square&logo=osgeo&logoColor=green&label=geos)
+![PROJ Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.latest.PROJ&style=flat-square&logo=osgeo&logoColor=green&label=proj)
+![Python Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.latest.PYTHON&style=flat-square&logo=python&logoColor=yellow&label=python)
+
+This Docker image is the **stable** version intended for production work with common geospatial libraries in the latest version of Python. 
+The image is built on top of the most recent Ubuntu Long-Term Support release (`ubuntu:latest`).
 
 To pull and start the container in your terminal:
 
@@ -67,9 +76,17 @@ docker attach here-be-dragons-latest
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](#)
 [![Pixi Badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
 
+![GitHub Actions Workflow Status - Next amd64](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-next-amd64.yml?style=flat-square&label=amd64)
+![GitHub Actions Workflow Status - Next arm64](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-next-arm64.yml?style=flat-square&label=arm64)
+![Arrow Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.next.ARROW&style=flat-square&logo=apache&logoColor=purple&label=arrow)
+![GDAL Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.next.GDAL&style=flat-square&logo=gdal&logoColor=green&label=gdal)
+![GEOS Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.next.GEOS&style=flat-square&logo=osgeo&logoColor=green&label=geos)
+![PROJ Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.next.PROJ&style=flat-square&logo=osgeo&logoColor=green&label=proj)
+![Python Version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.toml&query=%24.next.PYTHON&style=flat-square&logo=python&logoColor=yellow&label=python)
+
 This Docker image is the **experimental** version intended for testing the latest pre-release version of Python against Arrow, GDAL, GEOS, and PROJ. 
 Failing builds might indicate that issues are on the horizon.
-Extra packages (`geopandas`, etc.) may not be included in this image.
+The image is built on top of the most recent Ubuntu release (`ubuntu:rolling`).
 
 ```shell
 docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragons:next

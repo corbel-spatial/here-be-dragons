@@ -1,0 +1,13 @@
+[latest]
+ARROW = "apache-arrow-24.0.0"
+GDAL = "v3.12.3-r1"
+GEOS = "3.14.1"
+PROJ = "9.8.1"
+PYTHON = "v3.14.4"
+
+[next]
+ARROW = "apache-arrow-24.0.0"
+GDAL = "v3.13.0beta2"
+GEOS = "3.14.1"
+PROJ = "9.8.1"
+PYTHON = "v3.15.0a8"
