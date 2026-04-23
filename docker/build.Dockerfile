@@ -73,7 +73,7 @@ RUN python3 -c "import pyarrow"
 RUN python3 -c "import geoarrow.pyarrow"
 
 FROM build-arrow AS install-gis
-RUN uv pip install --system fiona geoalchemy2 geopandas geopy mapclassify psycopg psycopg2 shapely
+RUN uv pip install --system fiona geoalchemy2 geopandas geopy mapclassify psycopg psycopg2 shapely || echo "WARNING: Extra packages did not build"
 
 FROM install-gis AS runtime
 RUN apt purge -y \
