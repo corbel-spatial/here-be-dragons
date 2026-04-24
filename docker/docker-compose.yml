@@ -18,7 +18,6 @@ services:
     image: ghcr.io/corbel-spatial/here-be-dragons:latest${ARCH_SUFFIX:-}
     build:
       args:
-        # THE MAGIC GLUE: Tells BuildKit to grab the specific arch tag we just built
         - BASE_IMAGE_TAG=base${ARCH_SUFFIX:-}
         - ARROW_VER=${ARROW_VER_LATEST}
         - GDAL_VER=${GDAL_VER_LATEST}
@@ -41,7 +40,6 @@ services:
     image: ghcr.io/corbel-spatial/here-be-dragons:next${ARCH_SUFFIX:-}
     build:
       args:
-        # THE MAGIC GLUE: Tells BuildKit to grab the specific arch tag we just built
         - BASE_IMAGE_TAG=base${ARCH_SUFFIX:-}
         - ARROW_VER=${ARROW_VER_NEXT}
         - GDAL_VER=${GDAL_VER_NEXT}
