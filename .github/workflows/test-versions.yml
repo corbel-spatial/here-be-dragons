@@ -84,6 +84,7 @@ jobs:
             local EXPECTED_PROJ=$(echo "$3" | sed 's/^[a-zA-Z-]*//')
             local EXPECTED_GDAL=$(echo "$4" | sed 's/^[a-zA-Z-]*//')
             local EXPECTED_ARROW=$(echo "$5" | sed 's/^[a-zA-Z-]*//')
+            local EXPECTED_PYTHON=$(echo "$6" | sed 's/^[a-zA-Z-]*//')
 
             echo "========================================"
             echo "Testing Image: $IMAGE"
@@ -94,9 +95,16 @@ jobs:
               -e EXPECTED_PROJ="$EXPECTED_PROJ" \
               -e EXPECTED_GDAL="$EXPECTED_GDAL" \
               -e EXPECTED_ARROW="$EXPECTED_ARROW" \
+              -e EXPECTED_PYTHON="$EXPECTED_PYTHON" \
               "$IMAGE" bash << 'EOF'
           
             CONTAINER_FAILED=0
+
+            BASH_PYTHON=$(python --version 2>&1 | awk '{print $2}')
+            BASH_PYTHON3=$(python3 --version 2>&1 | awk '{print $2}')          
+            if [[ "$BASH_PYTHON" != *"$EXPECTED_PYTHON"* ]]; then echo "❌ python failed: expected $EXPECTED_PYTHON, got $BASH_PYTHON"; CONTAINER_FAILED=1; fi
+            if [[ "$BASH_PYTHON3" != *"$EXPECTED_PYTHON"* ]]; then echo "❌ python3 failed: expected $EXPECTED_PYTHON, got $BASH_PYTHON3"; CONTAINER_FAILED=1; fi
+            if [[ "$BASH_PYTHON" == *"$EXPECTED_PYTHON"* && "$BASH_PYTHON3" == *"$EXPECTED_PYTHON"* ]]; then echo "✅ Python verified (python: $BASH_PYTHON, python3: $BASH_PYTHON3)"; fi
 
             BASH_GEOS=$(geos-config --version)
             PY_GEOS=$(python -c "import shapely; print(shapely.geos_version_string)")
@@ -134,8 +142,8 @@ jobs:
           OVERALL_FAILED=0
 
           # Execute tests (the || captures the exit 1 from the container without stopping the script immediately)
-          test_image "$IMAGE_LATEST" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_LATEST" "$ARROW_VER_LATEST" || OVERALL_FAILED=1
-          test_image "$IMAGE_NEXT" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_NEXT" "$ARROW_VER_NEXT" || OVERALL_FAILED=1
+          test_image "$IMAGE_LATEST" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_LATEST" "$ARROW_VER_LATEST" "$PYTHON_VER_LATEST" || OVERALL_FAILED=1
+          test_image "$IMAGE_NEXT" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_NEXT" "$ARROW_VER_NEXT" "$PYTHON_VER_NEXT" || OVERALL_FAILED=1
 
           echo "========================================"
           if [ "$OVERALL_FAILED" -ne 0 ]; then
@@ -149,10 +157,9 @@ jobs:
         if: always() && steps.evaluate.outputs.run_tests == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SHA: ${{ github.event.workflow_run.head_sha }}
           CURRENT_RUN_ID: ${{ github.run_id }}
         run: |
-          echo "Looking for previous runs of '${{ github.workflow }}' for commit $SHA..."
+          echo "Looking for previous runs of '${{ github.workflow }}' for commit '${{ github.event.workflow_run.head_sha || github.sha }}'..."
           
           RUN_IDS=$(gh run list \
             --repo "${{ github.repository }}" \
