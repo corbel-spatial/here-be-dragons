@@ -1,13 +1,17 @@
-[latest]
-ARROW = "apache-arrow-24.0.0"
-GDAL = "v3.12.3-r1"
-GEOS = "3.14.1"
-PROJ = "9.8.1"
-PYTHON = "v3.14.4"
+# base
+GEOS_VER=3.14.1
+PROJ_VER=9.8.1
 
-[next]
-ARROW = "apache-arrow-24.0.0"
-GDAL = "v3.13.0beta2"
-GEOS = "3.14.1"
-PROJ = "9.8.1"
-PYTHON = "v3.15.0a8"
+# latest
+ARROW_VER_LATEST=apache-arrow-24.0.0
+GDAL_VER_LATEST=v3.12.4
+PYTHON_VER_LATEST=v3.14.4
+LATEST_TAG=3.14.4
+LATEST_TAG_SHORT=3.14
+
+# next
+ARROW_VER_NEXT=apache-arrow-25.0.0.dev
+GDAL_VER_NEXT=v3.13.0beta2
+PYTHON_VER_NEXT=v3.15.0a8
+NEXT_TAG=3.15.0a8
+NEXT_TAG_SHORT=3.15
