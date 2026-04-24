@@ -1,0 +1,177 @@
+name: Test Image Versions
+
+on:
+  workflow_run:
+    workflows: [ "Build Latest Image", "Build Next Image" ]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  evaluate-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      actions: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Evaluate Workflow Statuses
+        id: evaluate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "Manual trigger detected. Proceeding to tests."
+            echo "run_tests=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Evaluating build statuses for commit: $SHA"
+
+          get_run_data() {
+            gh run list --repo "${{ github.repository }}" --workflow "$1" --commit "$SHA" --json status,conclusion -q '.[0]'
+          }
+
+          LATEST_JSON=$(get_run_data "Build Latest Image")
+          NEXT_JSON=$(get_run_data "Build Next Image")
+
+          LATEST_STATUS=$(echo "$LATEST_JSON" | jq -r '.status // "null"')
+          LATEST_CONCLUSION=$(echo "$LATEST_JSON" | jq -r '.conclusion // "null"')
+          
+          NEXT_STATUS=$(echo "$NEXT_JSON" | jq -r '.status // "null"')
+          NEXT_CONCLUSION=$(echo "$NEXT_JSON" | jq -r '.conclusion // "null"')
+
+          echo "Build Latest Image -> Status: $LATEST_STATUS, Conclusion: $LATEST_CONCLUSION"
+          echo "Build Next Image   -> Status: $NEXT_STATUS, Conclusion: $NEXT_CONCLUSION"
+
+          if [[ "$LATEST_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]] || [[ "$NEXT_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]]; then
+             echo "A dependent workflow failed. Aborting tests."
+             echo "run_tests=false" >> "$GITHUB_OUTPUT"
+             exit 0
+          fi
+
+          if [[ "$LATEST_STATUS" =~ ^(in_progress|queued)$ ]] || [[ "$NEXT_STATUS" =~ ^(in_progress|queued)$ ]]; then
+             echo "A dependent workflow is still running. Skipping tests for now."
+             echo "run_tests=false" >> "$GITHUB_OUTPUT"
+             exit 0
+          fi
+
+          echo "All triggered workflows completed successfully. Proceeding with tests."
+          echo "run_tests=true" >> "$GITHUB_OUTPUT"
+
+      - name: Assert Image Versions (Bash & Python)
+        if: steps.evaluate.outputs.run_tests == 'true'
+        run: |
+          set -a; source versions.env; set +a
+          
+          IMAGE_LATEST="ghcr.io/corbel-spatial/here-be-dragons:latest"
+          IMAGE_NEXT="ghcr.io/corbel-spatial/here-be-dragons:next"
+          
+          echo "Pulling images..."
+          docker pull $IMAGE_LATEST
+          docker pull $IMAGE_NEXT
+
+          # Helper function to run tests in a single container spin-up
+          test_image() {
+            local IMAGE=$1
+          
+            # strip letters or hyphens from the start of the version strings
+            local EXPECTED_GEOS=$(echo "$2" | sed 's/^[a-zA-Z-]*//')
+            local EXPECTED_PROJ=$(echo "$3" | sed 's/^[a-zA-Z-]*//')
+            local EXPECTED_GDAL=$(echo "$4" | sed 's/^[a-zA-Z-]*//')
+            local EXPECTED_ARROW=$(echo "$5" | sed 's/^[a-zA-Z-]*//')
+
+            echo "========================================"
+            echo "Testing Image: $IMAGE"
+            echo "========================================"
+
+            docker run -i --rm \
+              -e EXPECTED_GEOS="$EXPECTED_GEOS" \
+              -e EXPECTED_PROJ="$EXPECTED_PROJ" \
+              -e EXPECTED_GDAL="$EXPECTED_GDAL" \
+              -e EXPECTED_ARROW="$EXPECTED_ARROW" \
+              "$IMAGE" bash << 'EOF'
+          
+            CONTAINER_FAILED=0
+
+            BASH_GEOS=$(geos-config --version)
+            PY_GEOS=$(python -c "import shapely; print(shapely.geos_version_string)")
+            if [[ "$BASH_GEOS" != *"$EXPECTED_GEOS"* ]]; then echo "❌ Bash GEOS failed: expected $EXPECTED_GEOS, got $BASH_GEOS"; CONTAINER_FAILED=1; fi
+            if [[ "$PY_GEOS" != *"$EXPECTED_GEOS"* ]]; then echo "❌ Python GEOS failed: expected $EXPECTED_GEOS, got $PY_GEOS"; CONTAINER_FAILED=1; fi
+            if [ "$CONTAINER_FAILED" -eq 0 ]; then echo "✅ GEOS verified (Bash: $BASH_GEOS, Python: $PY_GEOS)"; fi
+
+            BASH_PROJ=$(projinfo 2>&1 | head -n 1)
+            PY_PROJ=$(python -c "import pyproj; print(pyproj.proj_version_str)")
+            if [[ "$BASH_PROJ" != *"$EXPECTED_PROJ"* ]]; then echo "❌ Bash PROJ failed: expected $EXPECTED_PROJ, got $BASH_PROJ"; CONTAINER_FAILED=1; fi
+            if [[ "$PY_PROJ" != *"$EXPECTED_PROJ"* ]]; then echo "❌ Python PROJ failed: expected $EXPECTED_PROJ, got $PY_PROJ"; CONTAINER_FAILED=1; fi
+            if [[ "$BASH_PROJ" == *"$EXPECTED_PROJ"* && "$PY_PROJ" == *"$EXPECTED_PROJ"* ]]; then echo "✅ PROJ verified (Bash: $BASH_PROJ, Python: $PY_PROJ)"; fi
+
+            BASH_GDAL=$(gdal-config --version)
+            PY_GDAL=$(python -c "from osgeo import gdal; print(gdal.__version__)")
+            if [[ "$BASH_GDAL" != *"$EXPECTED_GDAL"* ]]; then echo "❌ Bash GDAL failed: expected $EXPECTED_GDAL, got $BASH_GDAL"; CONTAINER_FAILED=1; fi
+            if [[ "$PY_GDAL" != *"$EXPECTED_GDAL"* ]]; then echo "❌ Python GDAL failed: expected $EXPECTED_GDAL, got $PY_GDAL"; CONTAINER_FAILED=1; fi
+            if [[ "$BASH_GDAL" == *"$EXPECTED_GDAL"* && "$PY_GDAL" == *"$EXPECTED_GDAL"* ]]; then echo "✅ GDAL verified (Bash: $BASH_GDAL, Python: $PY_GDAL)"; fi
+
+            PY_ARROW=$(python -c "import pyarrow; print(pyarrow.__version__)")
+            CPP_ARROW=$(python -c "import pyarrow; print(pyarrow.cpp_version)")
+            
+            # try to handle Arrow's messy version naming
+            PY_ARROW=${PY_ARROW:0:6}
+            CPP_ARROW=${CPP_ARROW:0:6}
+            EXPECTED_ARROW=${EXPECTED_ARROW:0:6}
+            
+            if [[ "$PY_ARROW" != *"$EXPECTED_ARROW"* ]]; then echo "❌ Python Arrow failed: expected $EXPECTED_ARROW, got $PY_ARROW"; CONTAINER_FAILED=1; fi
+            if [[ "$CPP_ARROW" != *"$EXPECTED_ARROW"* ]]; then echo "❌ C++ Arrow failed: expected $EXPECTED_ARROW, got $CPP_ARROW"; CONTAINER_FAILED=1; fi
+            if [[ "$PY_ARROW" == *"$EXPECTED_ARROW"* && "$CPP_ARROW" == *"$EXPECTED_ARROW"* ]]; then echo "✅ Arrow verified (Python: $PY_ARROW, Bundled C++: $CPP_ARROW)"; fi
+            if [ "$CONTAINER_FAILED" -ne 0 ]; then exit 1; fi
+          EOF
+          }
+
+          OVERALL_FAILED=0
+
+          # Execute tests (the || captures the exit 1 from the container without stopping the script immediately)
+          test_image "$IMAGE_LATEST" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_LATEST" "$ARROW_VER_LATEST" || OVERALL_FAILED=1
+          test_image "$IMAGE_NEXT" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_NEXT" "$ARROW_VER_NEXT" || OVERALL_FAILED=1
+
+          echo "========================================"
+          if [ "$OVERALL_FAILED" -ne 0 ]; then
+            echo "❌ One or more tests failed."
+            exit 1
+          else
+            echo "🎉 All Bash and Python version checks passed successfully!"
+          fi
+
+      - name: Delete orphaned workflow runs
+        if: always() && steps.evaluate.outputs.run_tests == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        run: |
+          echo "Looking for previous runs of '${{ github.workflow }}' for commit $SHA..."
+          
+          RUN_IDS=$(gh run list \
+            --repo "${{ github.repository }}" \
+            --workflow "${{ github.workflow }}" \
+            --commit "$SHA" \
+            --json databaseId -q '.[].databaseId')
+          
+          if [ -z "$RUN_IDS" ]; then
+            echo "No runs found for this commit."
+            exit 0
+          fi
+
+          for RUN_ID in $RUN_IDS; do
+            if [ "$RUN_ID" != "$CURRENT_RUN_ID" ]; then
+              echo "Found orphaned run: $RUN_ID. Deleting..."
+              gh api \
+                --method DELETE \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "/repos/${{ github.repository }}/actions/runs/$RUN_ID"
+            fi
+          done

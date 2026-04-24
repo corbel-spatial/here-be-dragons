@@ -1,0 +1,83 @@
+# 🌍 Here Be Dragons 🐲
+
+A helpful Docker image for bleeding-edge spatial data analysis in Python.
+
+Tricky dependencies are built from source so you can run the latest geoprocessing libraries that depend on Python, Arrow, GDAL, GEOS, and PROJ.
+
+The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`). The Python package managers `uv` and `Pixi` are pre-installed.
+
+> [!TIP]
+> You will need to install [Docker](https://www.docker.com/get-started/). On Windows, running [Docker Desktop](https://docs.docker.com/desktop/features/wsl/) with [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) is recommended.
+
+
+## 🐍 Latest
+[![Latest Python Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PYTHON_VER_LATEST%3D)(.*)&replace=%242&logo=python&logoColor=yellow&label=python&labelColor=steelblue&color=steelblue)](#)
+[![Latest Arrow Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(ARROW_VER_LATEST%3D)(.*)&replace=%242&logo=apache&logoColor=orange&label=%20&labelColor=mediumpurple&color=mediumpurple)](#)
+[![Latest GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_LATEST%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](#)
+[![GEOS Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GEOS_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=GEOS&labelColor=slategray&color=slategray)](#)
+[![PROJ Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PROJ_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=PROJ&labelColor=slategray&color=slategray)](#)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](#)
+[![Pixi Badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-latest.yml)](#)
+
+This Docker image is the **stable** version intended for production work with common geospatial libraries in the latest version of Python.
+
+To pull and start the container in your terminal:
+
+```shell
+docker run -it --name here-be-dragons-latest ghcr.io/corbel-spatial/here-be-dragons:latest
+```
+
+After the image downloads and opens a terminal you can see which packages are already installed by running:
+
+```shell
+uv pip list
+```
+
+`geopandas` and common dependencies are pre-installed, which you can check with:
+
+```shell
+python -c "import geopandas; geopandas.show_versions()"
+```
+
+To install additional packages use `uv pip install --system`, for example:
+```shell
+uv pip install --system geojson duckdb sedonadb
+```
+
+To update and restart the stopped container:
+
+```shell
+docker pull ghcr.io/corbel-spatial/here-be-dragons:latest
+docker start here-be-dragons-latest
+docker attach here-be-dragons-latest
+```
+
+## 🔥 Next
+[![Next Python Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PYTHON_VER_NEXT%3D)(.*)&replace=%242&logo=python&logoColor=yellow&label=python&labelColor=steelblue&color=steelblue)](#)
+[![Next Arrow Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(ARROW_VER_NEXT%3D)(.*)&replace=%242&logo=apache&logoColor=orange&label=%20&labelColor=mediumpurple&color=mediumpurple)](#)
+[![Next GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_NEXT%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](#)
+[![GEOS Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GEOS_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=GEOS&labelColor=slategray&color=slategray)](#)
+[![PROJ Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PROJ_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=PROJ&labelColor=slategray&color=slategray)](#)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](#)
+[![Pixi Badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-next.yml)](#)
+
+This Docker image is the **experimental** version intended for testing the latest pre-release version of Python against Arrow, GDAL, GEOS, and PROJ. 
+Failing builds might indicate that issues are on the horizon.
+Extra packages (`geopandas`, etc.) may not be included in this image.
+
+```shell
+docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragons:next
+```
+
+## 📚 References 
+
+| Project                                                                                           | Source                            | Downstream Packages                                                      |
+|:--------------------------------------------------------------------------------------------------|:----------------------------------|:-------------------------------------------------------------------------|
+| [Arrow](https://arrow.apache.org/)                                                                | https://github.com/apache/arrow   | [geoarrow-pyarrow](https://geoarrow.org/geoarrow-python/main/index.html) |
+| [GDAL](https://gdal.org/)                                                                         | https://github.com/OSGeo/gdal     | [Python bindings](https://pypi.org/project/GDAL/)                        |
+| [GEOS](https://libgeos.org/)                                                                      | https://github.com/libgeos/geos   | [Shapely](https://shapely.readthedocs.io/)                               |
+| [PROJ](https://proj.org/)                                                                         | https://github.com/OSGeo/PROJ     | [Pyproj](https://pyproj4.github.io/pyproj/stable/)                       |
+| [Python](https://www.python.org/)<br/>([release schedule](https://devguide.python.org/versions/)) | https://github.com/python/cpython | [uv](https://docs.astral.sh/uv/), [Pixi](https://pixi.sh/latest/)        |
+| [Ubuntu](https://ubuntu.com/)                                                                     | https://hub.docker.com/_/ubuntu   | n/a                                                                      |
