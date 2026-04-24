@@ -16,9 +16,11 @@ The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`)
 [![Latest GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_LATEST%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](#)
 [![GEOS Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GEOS_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=GEOS&labelColor=slategray&color=slategray)](#)
 [![PROJ Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PROJ_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=PROJ&labelColor=slategray&color=slategray)](#)
+
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-latest.yml?branch=main)](https://github.com/corbel-spatial/here-be-dragons/actions/workflows/build-latest.yml?query=branch%3Amain)
+[![Ubuntu Version](https://img.shields.io/docker/v/_/ubuntu/rolling?logo=ubuntu&logoColor=white&label=ubuntu&labelColor=tomato&color=tomato)](#)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](#)
 [![Pixi Badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-latest.yml)](#)
 
 This Docker image is the **stable** version intended for production work with common geospatial libraries in the latest version of Python.
 
@@ -59,9 +61,11 @@ docker attach here-be-dragons-latest
 [![Next GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_NEXT%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](#)
 [![GEOS Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GEOS_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=GEOS&labelColor=slategray&color=slategray)](#)
 [![PROJ Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PROJ_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=PROJ&labelColor=slategray&color=slategray)](#)
+
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-next.yml?branch=main)](https://github.com/corbel-spatial/here-be-dragons/actions/workflows/build-next.yml?query=branch%3Amain)
+[![Ubuntu Version](https://img.shields.io/docker/v/_/ubuntu/rolling?logo=ubuntu&logoColor=white&label=ubuntu&labelColor=tomato&color=tomato)](#)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](#)
 [![Pixi Badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/prefix-dev/pixi/main/assets/badge/v0.json)](https://pixi.sh)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-next.yml)](#)
 
 This Docker image is the **experimental** version intended for testing the latest pre-release version of Python against Arrow, GDAL, GEOS, and PROJ. 
 Failing builds might indicate that issues are on the horizon.
@@ -70,6 +74,15 @@ Extra packages (`geopandas`, etc.) may not be included in this image.
 ```shell
 docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragons:next
 ```
+
+## ⚠️ TODO
+
+- Scheduled automatic update of `versions.env` to find new releases/tags
+- Reduce the size of the images (< 3gb?)
+- Add `latest-dev` and `next-dev` tags that keep all the build dependencies
+- Images should run as non-root user
+- Create a benchmark suite and check new releases for performance regressions
+- Add more packages upon request - please open an issue!
 
 ## 📚 References 
 
