@@ -1,18 +1,11 @@
 # Contributing
 
-## Building the Docker Image
+For testing and development work you can build the Docker images locally.
 
-Replace the version arguments (e.g., `PYTHON_VER`) with the branch or release tag to pull from GitHub.
-`PARALLEL` sets the number of CPU processes to use for build steps.
+The easiest way is to [install Pixi](https://pixi.prefix.dev/latest/installation/) and use one of the tasks defined in [pixi.toml](pixi.toml).
+The build argument `PARALLEL` sets the number of CPU processes to use.
 
 ```shell
-docker build \
-    --build-arg PYTHON_VER=v3.14.0 \
-    --build-arg GEOS_VER=3.14.0 \
-    --build-arg PARALLEL=4 \
-    --build-arg PROJ_VER=9.7.0 \
-    --build-arg GDAL_VER=v3.11.4 \
-    --build-arg ARROW_VER=apache-arrow-22.0.0 \
-    -f Dockerfile -t here-be-dragons:latest . && \
+pixi run build-latest --build-arg PARALLEL=4
 docker run -it here-be-dragons:latest
 ```

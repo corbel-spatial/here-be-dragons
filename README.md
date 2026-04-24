@@ -78,7 +78,6 @@ docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragon
 ## ⚠️ TODO
 
 - Scheduled automatic update of `versions.env` to find new releases/tags
-- Reduce the size of the images (< 3gb?)
 - Add `latest-dev` and `next-dev` tags that keep all the build dependencies
 - Images should run as non-root user
 - Create a benchmark suite and check new releases for performance regressions

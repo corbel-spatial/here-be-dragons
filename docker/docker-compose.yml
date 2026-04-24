@@ -1,61 +1,50 @@
 services:
   base:
-    image: ghcr.io/corbel-spatial/here-be-dragons:base${ARCH_SUFFIX:-}
+    image: ${NAMESPACE:-localhost/}here-be-dragons:base${ARCH_SUFFIX:-}
     build:
       args:
         - GEOS_VER=${GEOS_VER}
         - PARALLEL=${PARALLEL:-8}
         - PROJ_VER=${PROJ_VER}
-      cache_from:
-        - type=registry,ref=ghcr.io/corbel-spatial/here-be-dragons:buildcache-base${ARCH_SUFFIX:-}
-      cache_to:
-        - type=registry,ref=ghcr.io/corbel-spatial/here-be-dragons:buildcache-base${ARCH_SUFFIX:-},mode=max
+        - NAMESPACE=${NAMESPACE:-localhost/}
       dockerfile: base.Dockerfile
     env_file:
       - "../versions.env"
 
   latest:
-    image: ghcr.io/corbel-spatial/here-be-dragons:latest${ARCH_SUFFIX:-}
+    image: ${NAMESPACE:-localhost/}here-be-dragons:latest${ARCH_SUFFIX:-}
     build:
       args:
-        # THE MAGIC GLUE: Tells BuildKit to grab the specific arch tag we just built
         - BASE_IMAGE_TAG=base${ARCH_SUFFIX:-}
         - ARROW_VER=${ARROW_VER_LATEST}
         - GDAL_VER=${GDAL_VER_LATEST}
         - PARALLEL=${PARALLEL:-8}
         - PYTHON_VER=${PYTHON_VER_LATEST}
-      cache_from:
-        - type=registry,ref=ghcr.io/corbel-spatial/here-be-dragons:buildcache-latest${ARCH_SUFFIX:-}
-      cache_to:
-        - type=registry,ref=ghcr.io/corbel-spatial/here-be-dragons:buildcache-latest${ARCH_SUFFIX:-},mode=max
+        - NAMESPACE=${NAMESPACE:-localhost/}
       dockerfile: build.Dockerfile
       tags:
-        - ghcr.io/corbel-spatial/here-be-dragons:latest${ARCH_SUFFIX:-}
-        - ghcr.io/corbel-spatial/here-be-dragons:stable${ARCH_SUFFIX:-}
-        - ghcr.io/corbel-spatial/here-be-dragons:py${LATEST_TAG}${ARCH_SUFFIX:-}
-        - ghcr.io/corbel-spatial/here-be-dragons:py${LATEST_TAG_SHORT}${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:latest${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:stable${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:py${LATEST_TAG}${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:py${LATEST_TAG_SHORT}${ARCH_SUFFIX:-}
     env_file:
       - "../versions.env"
 
   next:
-    image: ghcr.io/corbel-spatial/here-be-dragons:next${ARCH_SUFFIX:-}
+    image: ${NAMESPACE:-localhost/}here-be-dragons:next${ARCH_SUFFIX:-}
     build:
       args:
-        # THE MAGIC GLUE: Tells BuildKit to grab the specific arch tag we just built
         - BASE_IMAGE_TAG=base${ARCH_SUFFIX:-}
         - ARROW_VER=${ARROW_VER_NEXT}
         - GDAL_VER=${GDAL_VER_NEXT}
         - PARALLEL=${PARALLEL:-8}
         - PYTHON_VER=${PYTHON_VER_NEXT}
-      cache_from:
-        - type=registry,ref=ghcr.io/corbel-spatial/here-be-dragons:buildcache-next${ARCH_SUFFIX:-}
-      cache_to:
-        - type=registry,ref=ghcr.io/corbel-spatial/here-be-dragons:buildcache-next${ARCH_SUFFIX:-},mode=max
+        - NAMESPACE=${NAMESPACE:-localhost/}
       dockerfile: build.Dockerfile
       tags:
-        - ghcr.io/corbel-spatial/here-be-dragons:next${ARCH_SUFFIX:-}
-        - ghcr.io/corbel-spatial/here-be-dragons:experimental${ARCH_SUFFIX:-}
-        - ghcr.io/corbel-spatial/here-be-dragons:py${NEXT_TAG}${ARCH_SUFFIX:-}
-        - ghcr.io/corbel-spatial/here-be-dragons:py${NEXT_TAG_SHORT}${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:next${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:experimental${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:py${NEXT_TAG}${ARCH_SUFFIX:-}
+        - ${NAMESPACE:-localhost/}here-be-dragons:py${NEXT_TAG_SHORT}${ARCH_SUFFIX:-}
     env_file:
       - "../versions.env"

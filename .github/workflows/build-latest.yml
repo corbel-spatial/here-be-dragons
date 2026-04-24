@@ -6,11 +6,11 @@ on:
     types: [ completed ]
 
 env:
-  REGISTRY: ghcr.io
   IMAGE_NAME: corbel-spatial/here-be-dragons
+  REGISTRY: ghcr.io
 
 jobs:
-  build-latest:
+  build-latest-matrix:
     if: >
       github.event_name == 'workflow_dispatch' || 
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
@@ -29,53 +29,93 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v6
+      - name: Load versions
+        run: |
+          set -a; source versions.env; set +a
+          echo "ARROW_VER_LATEST=$ARROW_VER_LATEST" >> $GITHUB_ENV
+          echo "GDAL_VER_LATEST=$GDAL_VER_LATEST" >> $GITHUB_ENV
+          echo "PYTHON_VER_LATEST=$PYTHON_VER_LATEST" >> $GITHUB_ENV
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "LATEST_TAG_SHORT=$LATEST_TAG_SHORT" >> $GITHUB_ENV
       - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Latest
-        env:
-          ARCH_SUFFIX: ${{ matrix.suffix }}
+      - name: Wait for base image to be available
         run: |
-          set -a; source versions.env; set +a
-          cd docker
-          docker buildx bake --push latest
+          REGISTRY="${{ env.REGISTRY }}"
+          IMAGE_NAME="${{ env.IMAGE_NAME }}"
+          BASE_IMAGE="${REGISTRY}/${IMAGE_NAME}:base${{ matrix.suffix }}"
+          
+          echo "Waiting for base image: ${BASE_IMAGE}"
+          MAX_RETRIES=60
+          RETRY_DELAY=5
+          
+          for i in $(seq 1 $MAX_RETRIES); do
+            if docker pull "${BASE_IMAGE}" &>/dev/null; then
+              echo "✅ Base image available. Proceeding with build."
+              exit 0
+            fi
+            if [ $i -eq $MAX_RETRIES ]; then
+              echo "❌ Timeout waiting for base image after $(($MAX_RETRIES * $RETRY_DELAY))s"
+              exit 1
+            fi
+            echo "Attempt $i/$MAX_RETRIES: Base image not yet available. Waiting..."
+            sleep $RETRY_DELAY
+          done
+      - uses: docker/build-push-action@v7
+        with:
+          context: ./docker
+          file: ./docker/build.Dockerfile
+          push: true
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-latest${{ matrix.suffix }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-latest${{ matrix.suffix }},mode=max
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest${{ matrix.suffix }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:stable${{ matrix.suffix }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:py${{ env.LATEST_TAG }}${{ matrix.suffix }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:py${{ env.LATEST_TAG_SHORT }}${{ matrix.suffix }}
+          build-args: |
+            BASE_IMAGE_TAG=base${{ matrix.suffix }}
+            ARROW_VER=${{ env.ARROW_VER_LATEST }}
+            GDAL_VER=${{ env.GDAL_VER_LATEST }}
+            PARALLEL=8
+            PYTHON_VER=${{ env.PYTHON_VER_LATEST }}
+            NAMESPACE=${{ env.REGISTRY }}/corbel-spatial/
 
-  stitch:
+  build-latest-manifest:
+    needs: build-latest-matrix
     if: >
       github.event_name == 'workflow_dispatch' || 
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
-    needs: build-latest
     runs-on: ubuntu-latest
     permissions:
       packages: write
     steps:
       - uses: actions/checkout@v6
-        with:
-          sparse-checkout: versions.env
       - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Merge Manifests
+      - name: Load versions
         run: |
           set -a; source versions.env; set +a
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "LATEST_TAG_SHORT=$LATEST_TAG_SHORT" >> $GITHUB_ENV
+      - name: Create and push multi-arch manifests
+        run: |
+          REGISTRY="${{ env.REGISTRY }}"
+          IMAGE_NAME="${{ env.IMAGE_NAME }}"
+          AMD64="${REGISTRY}/${IMAGE_NAME}:latest-amd64"
+          ARM64="${REGISTRY}/${IMAGE_NAME}:latest-arm64"
           
-          TAGS=(
-            "latest"
-            "stable"
-            "py${LATEST_TAG}"
-            "py${LATEST_TAG_SHORT}"
-          )
-          
-          for TAG in "${TAGS[@]}"; do
-            echo "Stitching manifest for tag: $TAG"
-            docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG} \
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG}-amd64 \
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG}-arm64
+          # Create manifests for all tags: latest, stable, and version-specific tags
+          for TAG in latest stable py${{ env.LATEST_TAG }} py${{ env.LATEST_TAG_SHORT }}; do
+            echo "Creating manifest for ${TAG}..."
+            docker buildx imagetools create -t "${REGISTRY}/${IMAGE_NAME}:${TAG}" "${AMD64}" "${ARM64}"
+            echo "✅ Created manifest for ${TAG}"
           done

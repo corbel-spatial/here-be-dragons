@@ -1,6 +1,6 @@
 [workspace]
 channels = ["conda-forge"]
-platforms = ["linux-64", "linux-aarch64", "win-64", "osx-64", "osx-arm64"]
+platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64", "win-64"]
 
 [dependencies]
 pixi-pycharm = ">=0.0.11,<0.0.12"
@@ -13,12 +13,10 @@ tomlkit = ">=0.14.0,<0.15"
 
 [feature.build.tasks]
 build = { depends-on = ["build-base", "build-latest", "build-next"] }
-build-base = "docker compose --env-file versions.env --project-directory docker build base"
-build-latest = { cmd = "docker compose --env-file versions.env --project-directory docker build latest" }
-build-next = { cmd = "docker compose --env-file versions.env --project-directory docker build next" }
-build-ci = "python ./scripts/ci.py"
-lint = "ruff check scripts/ --fix"
-update = "python scripts/update.py"
+build-base = "docker compose --project-directory docker --env-file versions.env build --build-arg ARCH_SUFFIX=-amd64 base"
+build-latest = "docker compose --project-directory docker --env-file versions.env build --build-arg ARCH_SUFFIX=-amd64 latest"
+build-next = "docker compose --project-directory docker --env-file versions.env build --build-arg ARCH_SUFFIX=-amd64 next"
+lint = "ruff check --fix"
 
 [feature.docs]
 # dependencies should include everything in docs/requirements.txt
