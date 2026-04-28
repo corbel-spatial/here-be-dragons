@@ -25,6 +25,7 @@ RUN apt update && \
         cmake \
         curl \
         git \
+        libffi-dev \
         libncurses-dev \
         libpq-dev \
         libreadline-dev \
@@ -54,6 +55,7 @@ RUN pip3 install --no-cache-dir uv --root-user-action ignore && \
     strip --strip-all /usr/local/bin/uv 2>/dev/null || true
 
 RUN ldconfig && \
+    uv pip install --system --upgrade pip && \
     uv pip install --system --no-cache-dir certifi numpy setuptools && \
     uv pip install --system --no-cache-dir pyproj shapely --no-binary :all: && \
     python3 -c "import pyproj" && \
@@ -206,6 +208,7 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
         automake \
         build-essential \
         cmake \
+        libffi-dev \
         libncurses-dev \
         libpq-dev \
         libreadline-dev \
