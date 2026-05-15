@@ -70,7 +70,7 @@ docker attach here-be-dragons-latest
 
 This Docker image is the **experimental** version intended for testing the latest pre-release version of Python against Arrow, GDAL, GEOS, and PROJ. 
 Failing builds might indicate that issues are on the horizon.
-Extra packages (`geopandas`, etc.) may not be included in this image.
+Some extra packages (`mapclassify`, etc.) may not be included in this image.
 
 ```shell
 docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragons:next
