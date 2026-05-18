@@ -7,6 +7,8 @@ Tricky dependencies are built from source so you can run the latest Python geopr
 The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`) with [optimized](https://github.com/python/cpython#profile-guided-optimization) Python builds.
 The Python package managers `uv` and `Pixi` come pre-installed.
 
+By default, running the Docker images launches a [marimo](https://marimo.io/) notebook.
+
 > [!TIP]
 > You will need to install [Docker](https://www.docker.com/get-started/). On Windows, running [Docker Desktop](https://docs.docker.com/desktop/features/wsl/) with [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) is recommended.
 
@@ -28,24 +30,7 @@ This Docker image is the **stable** version intended for production work with co
 To pull and start the container in your terminal:
 
 ```shell
-docker run -it --name here-be-dragons-latest ghcr.io/corbel-spatial/here-be-dragons:latest
-```
-
-After the image downloads and opens a terminal you can see which packages are already installed by running:
-
-```shell
-uv pip list
-```
-
-`geopandas` and common dependencies are pre-installed, which you can check with:
-
-```shell
-python -c "import geopandas; geopandas.show_versions()"
-```
-
-To install additional packages use `uv pip install --system`, for example:
-```shell
-uv pip install --system geojson duckdb sedonadb
+docker run --name here-be-dragons-latest -p 8080:8080 ghcr.io/corbel-spatial/here-be-dragons:latest
 ```
 
 To update and restart the stopped container:
@@ -73,14 +58,13 @@ Failing builds might indicate that issues are on the horizon.
 Some extra packages (`mapclassify`, etc.) may not be included in this image.
 
 ```shell
-docker run -it --name here-be-dragons-next ghcr.io/corbel-spatial/here-be-dragons:next
+docker run --name here-be-dragons-next -p 8080:8080 ghcr.io/corbel-spatial/here-be-dragons:next
 ```
 
 ## ⚠️ TODO
 
 - Scheduled automatic update of `versions.env` to find new releases/tags
 - Add `latest-dev` and `next-dev` tags that keep all the build dependencies
-- Images should run as non-root user
 - Create a benchmark suite and check new releases for performance regressions
 - Add more packages upon request - please open an issue!
 

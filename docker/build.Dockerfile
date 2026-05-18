@@ -261,4 +261,18 @@ RUN ldconfig && \
     python -c "import pyarrow" && \
     python -c "import geoarrow.pyarrow"
 
-CMD ["bash"]
+# Set up marimo
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /home/marimo
+RUN chown -R 1000:1000 /home/marimo
+COPY --chown=1000:1000 here-be-dragons.py .
+
+EXPOSE 8080
+RUN uv pip install --system marimo>=0.23.0
+
+USER 1000
+ENV HOME=/home/marimo
+
+CMD ["marimo", "edit", "here-be-dragons.py", "--host", "0.0.0.0", "--port", "8080"]
