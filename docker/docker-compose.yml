@@ -18,6 +18,7 @@ services:
         - BASE_IMAGE_TAG=base${ARCH_SUFFIX:-}
         - ARROW_VER=${ARROW_VER_LATEST}
         - GDAL_VER=${GDAL_VER_LATEST}
+        - MARIMO_VER=${MARIMO_VER}
         - PARALLEL=${PARALLEL:-8}
         - PYTHON_VER=${PYTHON_VER_LATEST}
         - NAMESPACE=${NAMESPACE:-localhost/}
@@ -37,6 +38,7 @@ services:
         - BASE_IMAGE_TAG=base${ARCH_SUFFIX:-}
         - ARROW_VER=${ARROW_VER_NEXT}
         - GDAL_VER=${GDAL_VER_NEXT}
+        - MARIMO_VER=${MARIMO_VER}
         - PARALLEL=${PARALLEL:-8}
         - PYTHON_VER=${PYTHON_VER_NEXT}
         - NAMESPACE=${NAMESPACE:-localhost/}

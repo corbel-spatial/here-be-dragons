@@ -65,8 +65,8 @@ html_theme_options = {
             "url": "https://github.com/corbel-spatial/here-be-dragons",
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
-        }
-    ]
+        },
+    ],
 }
 
 html_sidebars = {

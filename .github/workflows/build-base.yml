@@ -12,6 +12,7 @@ on:
       - docker/base.Dockerfile
       - docker/build.Dockerfile
       - docker/docker-compose.yml
+      - docker/here-be-dragons.py
 
 env:
   IMAGE_NAME: corbel-spatial/here-be-dragons

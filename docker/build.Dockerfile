@@ -30,6 +30,7 @@ RUN apt update && \
         libncurses-dev \
         libpq-dev \
         libreadline-dev \
+        libsqlite3-dev \
         libssl-dev \
         libtool \
         libzstd-dev \
@@ -170,7 +171,7 @@ RUN uv pip install --system --no-cache-dir geoarrow-pyarrow --no-binary :all: &&
 
 FROM build-arrow AS install-gis
 
-# Install extra GIS packages, warn if not possible (next likely fails)
+# Install extra packages, warn if not possible (next likely fails)
 ENV GDAL_DATA=/usr/local/share/gdal
 RUN apt update && \
     apt install -y --no-install-recommends \
@@ -187,6 +188,8 @@ RUN uv pip install --system mapclassify --no-binary mapclassify || echo "WARNING
 RUN uv pip install --system matplotlib --no-binary matplotlib || echo "WARNING: matplotlib did not build"
 RUN uv pip install --system psycopg --no-binary psycopg || echo "WARNING: psycopg did not build"
 RUN uv pip install --system psycopg2 --no-binary psycopg2 || echo "WARNING: psycopg2 did not build"
+ARG MARIMO_VER
+RUN uv pip install --system "marimo[recommended]==${MARIMO_VER}" lonboard || uv pip install --system "marimo==${MARIMO_VER}" lonboard
 RUN uv cache clean
 
 # ============================================================================
@@ -200,11 +203,6 @@ RUN ln -sf /usr/local/bin/python3 /usr/bin/python && \
     ln -sf /usr/local/bin/pip3 /usr/local/bin/pip && \
     ln -sf /usr/local/bin/pip3 /usr/bin/pip
 RUN python --version && pip --version
-
-# Install Pixi package manager
-RUN curl -fsSL https://pixi.sh/install.sh | sh
-ENV PATH=$HOME/.pixi/bin:$PATH
-RUN pixi self-update
 
 # Pre-compile all Python modules to bytecode for faster first-import
 # Then pin runtime dependencies
@@ -237,7 +235,6 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
         lzma \
         ninja-build \
         pkg-config \
-        python3-dev \
         rustup \
         swig \
         tk-dev \
@@ -259,6 +256,26 @@ RUN ldconfig && \
     python -c "import shapely" && \
     python -c "from osgeo import gdal" && \
     python -c "import pyarrow" && \
-    python -c "import geoarrow.pyarrow"
+    python -c "import geoarrow.pyarrow" && \
+    python -c "import marimo"
 
-CMD ["bash"]
+# Set up userspace
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV HOME=/home/ubuntu
+WORKDIR /home/ubuntu
+RUN chown -R 1000:1000 /home/ubuntu
+COPY --chown=1000:1000 here-be-dragons.py .
+EXPOSE 8080
+USER 1000
+
+# Install Pixi package manager
+RUN curl -fsSL https://pixi.sh/install.sh | sh
+ENV PATH=/home/ubuntu/.pixi/bin:$PATH
+RUN pixi self-update
+
+# Set up uv venv
+RUN uv venv --system-site-packages
+ENV PATH="/home/ubuntu/.venv/bin:$PATH"
+
+CMD ["python", "-m", "marimo", "edit", "--no-sandbox", "here-be-dragons.py", "--host", "0.0.0.0", "--port", "8080"]
