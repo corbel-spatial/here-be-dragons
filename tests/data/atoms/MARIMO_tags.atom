@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/marimo-team/marimo/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/marimo-team/marimo/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/marimo-team/marimo/releases.atom"/>
+  <title>Tags from marimo</title>
+  <updated>2026-05-22T16:20:38Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.8</id>
+    <updated>2026-05-22T16:20:38Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.8"/>
+    <title>0.23.8</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.7</id>
+    <updated>2026-05-21T22:02:07Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.7"/>
+    <title>0.23.7</title>
+    <content></content>
+    <author>
+      <name>dmadisetti</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2689338?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.6</id>
+    <updated>2026-05-11T21:38:11Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.6"/>
+    <title>0.23.6</title>
+    <content></content>
+    <author>
+      <name>mscolnick</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2753772?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.5</id>
+    <updated>2026-05-05T16:34:44Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.5"/>
+    <title>0.23.5</title>
+    <content></content>
+    <author>
+      <name>dmadisetti</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2689338?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.4</id>
+    <updated>2026-04-28T18:00:50Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.4"/>
+    <title>0.23.4</title>
+    <content></content>
+    <author>
+      <name>mscolnick</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2753772?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.3</id>
+    <updated>2026-04-24T18:00:48Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.3"/>
+    <title>0.23.3</title>
+    <content></content>
+    <author>
+      <name>mscolnick</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2753772?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.2</id>
+    <updated>2026-04-20T21:48:06Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.2"/>
+    <title>0.23.2</title>
+    <content></content>
+    <author>
+      <name>mscolnick</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2753772?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.1</id>
+    <updated>2026-04-10T23:49:14Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.1"/>
+    <title>0.23.1</title>
+    <content></content>
+    <author>
+      <name>dmadisetti</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2689338?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.23.0</id>
+    <updated>2026-04-09T14:03:47Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.23.0"/>
+    <title>0.23.0</title>
+    <content></content>
+    <author>
+      <name>mscolnick</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2753772?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/678526156/0.22.5</id>
+    <updated>2026-04-07T17:57:15Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/marimo-team/marimo/releases/tag/0.22.5"/>
+    <title>0.22.5</title>
+    <content></content>
+    <author>
+      <name>dmadisetti</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/2689338?s=60&amp;v=4"/>
+  </entry>
+</feed>

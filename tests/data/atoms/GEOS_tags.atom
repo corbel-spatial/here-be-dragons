@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/libgeos/geos/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/libgeos/geos/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/libgeos/geos/releases.atom"/>
+  <title>Tags from geos</title>
+  <updated>2025-10-27T15:07:37Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.14.1</id>
+    <updated>2025-10-27T15:28:32Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.14.1"/>
+    <title>Release 3.14.1</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.14.0</id>
+    <updated>2025-08-21T15:20:58Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.14.0"/>
+    <title>Release 3.14.0</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.14.0rc1</id>
+    <updated>2025-08-19T16:25:48Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.14.0rc1"/>
+    <title>3.14.0rc1</title>
+    <content></content>
+    <author>
+      <name>pramsey</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/113883?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.14.0beta3</id>
+    <updated>2025-08-13T21:22:42Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.14.0beta3"/>
+    <title>3.14.0beta3</title>
+    <content></content>
+    <author>
+      <name>pramsey</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/113883?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.14.0beta2</id>
+    <updated>2025-08-12T18:45:54Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.14.0beta2"/>
+    <title>3.14.0beta2</title>
+    <content type="html">&lt;p&gt;Mark of pieces of the code base to not export, most particularly the …&lt;/p&gt;
+
+&lt;p&gt;…web directory&lt;/p&gt;</content>
+    <author>
+      <name>pramsey</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/113883?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.14.0beta1</id>
+    <updated>2025-07-21T18:17:02Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.14.0beta1"/>
+    <title>3.14.0beta1</title>
+    <content></content>
+    <author>
+      <name>pramsey</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/113883?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.13.1</id>
+    <updated>2025-03-04T17:27:07Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.13.1"/>
+    <title>Release 3.13.1</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.12.3</id>
+    <updated>2025-03-03T18:19:53Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.12.3"/>
+    <title>Release 3.12.3</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.11.5</id>
+    <updated>2025-03-03T18:21:36Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.11.5"/>
+    <title>Release 3.11.5</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/2651432/3.10.7</id>
+    <updated>2025-03-03T18:30:53Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/libgeos/geos/releases/tag/3.10.7"/>
+    <title>Release 3.10.7</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+</feed>

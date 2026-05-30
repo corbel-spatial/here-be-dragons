@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/OSGeo/gdal/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/OSGeo/gdal/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/OSGeo/gdal/releases.atom"/>
+  <title>Tags from gdal</title>
+  <updated>2026-05-08T09:31:27Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.13.0</id>
+    <updated>2026-05-08T10:55:44Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.13.0"/>
+    <title>GDAL 3.13.0 &quot;Iowa City&quot;</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.13.0RC2</id>
+    <updated>2026-05-04T16:06:33Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.13.0RC2"/>
+    <title>v3.13.0RC2</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.13.0RC1</id>
+    <updated>2026-05-04T10:08:59Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.13.0RC1"/>
+    <title>v3.13.0RC1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.12.4</id>
+    <updated>2026-04-24T13:30:41Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.12.4"/>
+    <title>GDAL 3.12.4</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.13.0beta2</id>
+    <updated>2026-04-22T12:29:59Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.13.0beta2"/>
+    <title>v3.13.0beta2</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.12.4RC1</id>
+    <updated>2026-04-22T10:38:26Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.12.4RC1"/>
+    <title>v3.12.4RC1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.13.0beta1</id>
+    <updated>2026-04-15T14:39:23Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.13.0beta1"/>
+    <title>v3.13.0beta1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.12.3-r1</id>
+    <updated>2026-04-05T17:11:13Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.12.3-r1"/>
+    <title>v3.12.3-r1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.12.3</id>
+    <updated>2026-03-20T13:53:19Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.12.3"/>
+    <title>GDAL 3.12.3</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/6148317/v3.12.3RC2</id>
+    <updated>2026-03-17T19:34:20Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/gdal/releases/tag/v3.12.3RC2"/>
+    <title>v3.12.3RC2</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+</feed>

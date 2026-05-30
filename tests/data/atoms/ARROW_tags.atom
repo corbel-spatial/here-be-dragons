@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/apache/arrow/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/apache/arrow/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/apache/arrow/releases.atom"/>
+  <title>Tags from arrow</title>
+  <updated>2026-04-27T03:29:18Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/r-universe-release</id>
+    <updated>2026-04-27T03:29:18Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/r-universe-release"/>
+    <title>r-universe-release</title>
+    <content></content>
+    <author>
+      <name>amoeba</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/563?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-25.0.0.dev</id>
+    <updated>2026-04-21T09:35:51Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-25.0.0.dev"/>
+    <title>apache-arrow-25.0.0.dev</title>
+    <content></content>
+    <author>
+      <name>raulcd</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/639755?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-24.0.0</id>
+    <updated>2026-04-21T08:48:16Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-24.0.0"/>
+    <title>Apache Arrow 24.0.0</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-24.0.0-rc0</id>
+    <updated>2026-04-15T02:29:19Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-24.0.0-rc0"/>
+    <title>Apache Arrow 24.0.0 RC0</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-23.0.1</id>
+    <updated>2026-02-16T09:57:24Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-23.0.1"/>
+    <title>Apache Arrow 23.0.1</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-23.0.1-rc0</id>
+    <updated>2026-02-11T01:03:15Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-23.0.1-rc0"/>
+    <title>Apache Arrow 23.0.1 RC0</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-24.0.0.dev</id>
+    <updated>2026-01-18T16:26:16Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-24.0.0.dev"/>
+    <title>apache-arrow-24.0.0.dev</title>
+    <content></content>
+    <author>
+      <name>raulcd</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/639755?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-23.0.0</id>
+    <updated>2026-01-18T16:24:46Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-23.0.0"/>
+    <title>Apache Arrow 23.0.0</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-23.0.0-rc2</id>
+    <updated>2026-01-13T21:27:54Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-23.0.0-rc2"/>
+    <title>Apache Arrow 23.0.0 RC2</title>
+    <content></content>
+    <author>
+      <name>github-actions</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/51905353/apache-arrow-23.0.0-rc1</id>
+    <updated>2026-01-13T12:04:55Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/apache/arrow/releases/tag/apache-arrow-23.0.0-rc1"/>
+    <title>apache-arrow-23.0.0-rc1</title>
+    <content></content>
+    <author>
+      <name>raulcd</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/639755?s=60&amp;v=4"/>
+  </entry>
+</feed>

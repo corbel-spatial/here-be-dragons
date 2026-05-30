@@ -1,0 +1,103 @@
+{
+  "ARROW": {
+    "name": "ARROW",
+    "nice_name": "Arrow",
+    "repo_url": "https://github.com/apache/arrow",
+    "prefix": "apache-arrow-",
+    "build_suffixes": null,
+    "prerelease_suffixes": [
+      ".dev",
+      "-rc0",
+      "-rc1",
+      "-rc2",
+      "-rc3",
+      "-rc4",
+      "-rc5",
+      "-rc6"
+    ],
+    "next": true
+  },
+  "GDAL": {
+    "name": "GDAL",
+    "nice_name": "GDAL",
+    "repo_url": "https://github.com/OSGeo/gdal",
+    "prefix": "v",
+    "build_suffixes": [
+      "-r1"
+    ],
+    "prerelease_suffixes": [
+      "beta0",
+      "beta1",
+      "beta2",
+      "rc0",
+      "RC1",
+      "RC2",
+      "RC3"
+    ],
+    "next": true
+  },
+  "GEOS": {
+    "name": "GEOS",
+    "nice_name": "GEOS",
+    "repo_url": "https://github.com/libgeos/geos",
+    "prefix": null,
+    "build_suffixes": null,
+    "prerelease_suffixes": [
+      "beta1",
+      "beta2",
+      "beta3",
+      "rc0",
+      "rc1",
+      "rc2",
+      "rc3"
+    ],
+    "next": false
+  },
+  "MARIMO": {
+    "name": "MARIMO",
+    "nice_name": "marimo",
+    "repo_url": "https://github.com/marimo-team/marimo",
+    "prefix": null,
+    "build_suffixes": null,
+    "prerelease_suffixes": null,
+    "next": false
+  },
+  "PROJ": {
+    "name": "PROJ",
+    "nice_name": "PROJ",
+    "repo_url": "https://github.com/OSGeo/PROJ",
+    "prefix": null,
+    "build_suffixes": [
+      "-1"
+    ],
+    "prerelease_suffixes": [
+      "RC1"
+    ],
+    "next": false
+  },
+  "PYTHON": {
+    "name": "PYTHON",
+    "nice_name": "Python",
+    "repo_url": "https://github.com/python/cpython",
+    "prefix": "v",
+    "build_suffixes": null,
+    "prerelease_suffixes": [
+      "a1",
+      "a2",
+      "a3",
+      "a4",
+      "a5",
+      "a6",
+      "a7",
+      "a8",
+      "b1",
+      "b2",
+      "b3",
+      "b4",
+      "rc1",
+      "rc2",
+      "rc3"
+    ],
+    "next": true
+  }
+}
