@@ -1,7 +1,7 @@
 [pytest]
 minversion = "9.0"
 testpaths = [
-    "tests"
+    "./tests"
 ]
 pythonpath = [
     "./scripts"

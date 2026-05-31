@@ -104,14 +104,10 @@ class Version:
             self.prefix or "",
         )
 
-    def __lt__(self, other: object) -> bool:
-        if not isinstance(other, Version):
-            return NotImplemented
+    def __lt__(self, other: "Version") -> bool:
         return self._comparison_key() < other._comparison_key()
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Version):
-            return NotImplemented
+    def __eq__(self, other: "Version") -> bool:
         return self._comparison_key() == other._comparison_key()
 
 
@@ -295,7 +291,7 @@ def _refresh_packages(packages: list[Package]) -> None:
             pkg.write_env(VERSIONS_ENV)
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     configs = json.loads(UPDATE_CONFIG_JSON.read_text())
     vers = dotenv.dotenv_values(VERSIONS_ENV)
 
@@ -304,5 +300,5 @@ def main() -> None:
     _refresh_packages(packages)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

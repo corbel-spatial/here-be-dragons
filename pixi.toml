@@ -18,6 +18,7 @@ build-latest = { cmd = "docker compose --project-directory docker --env-file ver
 build-next = { cmd = "docker compose --project-directory docker --env-file versions.env --progress plain build next", depends-on = ["build-base"] }
 latest = "docker run --rm --name here-be-dragons-latest -p 8080:8080 localhost/here-be-dragons:latest"
 next = "docker run --rm --name here-be-dragons-next -p 8080:8080 localhost/here-be-dragons:next"
+update = "python scripts/update.py"
 
 [feature.docs]
 # dependencies should include everything in docs/requirements.txt
@@ -31,7 +32,9 @@ lonboard = ">=0.16.0,<0.17"
 marimo = ">=0.23.8,<0.24"
 pixi-pycharm = ">=0.0.11,<0.0.12"
 pytest = ">=9.0.3,<10"
+pytest-cov = ">=7.1.0,<8"
 ruff = ">=0.15.15,<0.16"
 
 [feature.dev.tasks]
-test = "pytest"
+test = "pytest ./tests"
+cov = "pytest --cov=./scripts --cov-report=term-missing"
