@@ -57,7 +57,6 @@ docker run --name here-be-dragons-next -p 8080:8080 ghcr.io/corbel-spatial/here-
 
 ## 🚧 To-do List
 
-- Add `latest-dev` and `next-dev` variants that keep all the build dependencies
 - Add variants built with freethreaded Python (`--disable-gil`)
 - Create a benchmark suite and check new releases for performance regressions
 - Add more packages upon request - please open an issue!
