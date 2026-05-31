@@ -2,22 +2,18 @@
 
 A helpful Docker image for bleeding-edge spatial data analysis in Python.
 
-Tricky dependencies are built from source so you can run the latest Python geoprocessing libraries that depend on Arrow,
-GDAL, GEOS, and PROJ.
+Tricky dependencies are built from source so you can run the latest Python geoprocessing libraries that depend on Arrow, GDAL, GEOS, and PROJ.
 
-The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`)
-with [optimized](https://github.com/python/cpython#profile-guided-optimization) Python builds.
+The images are built on top of the most recent Ubuntu release (`ubuntu:rolling`) with [optimized](https://github.com/python/cpython#profile-guided-optimization) Python builds.
 The Python package managers `uv` and `Pixi` come pre-installed.
 
 By default, running the Docker images launches a [marimo](https://marimo.io/) notebook.
 
 > [!TIP]
-> You will need to install [Docker](https://www.docker.com/get-started/). On Windows,
-> running [Docker Desktop](https://docs.docker.com/desktop/features/wsl/)
-> with [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) is recommended.
+> You will need to install [Docker](https://www.docker.com/get-started/). On Windows, running [Docker Desktop](https://docs.docker.com/desktop/features/wsl/) with [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) is recommended.
+
 
 ## 🐍 Latest
-
 [![Latest Python Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PYTHON_VER_LATEST%3D)(.*)&replace=%242&logo=python&logoColor=yellow&label=python&labelColor=steelblue&color=steelblue)](https://github.com/python/cpython/tags)
 [![Latest Arrow Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(ARROW_VER_LATEST%3D)(.*)&replace=%242&logo=apache&logoColor=orange&label=%20&labelColor=mediumpurple&color=mediumpurple)](https://github.com/apache/arrow/releases)
 [![Latest GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_LATEST%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](https://github.com/OSGeo/gdal/releases)
@@ -30,8 +26,7 @@ By default, running the Docker images launches a [marimo](https://marimo.io/) no
 [![Pixi](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fprefix-dev%2Fpixi%2Fmain%2Fassets%2Fbadge%2Fv0.json&label=%E2%9C%A8)](https://pixi.sh)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
-This Docker image is the **stable** version intended for production work with common geospatial libraries in the latest
-version of Python. By default, running the Docker image launches a [marimo](https://marimo.io/) notebook.
+This Docker image is the **stable** version intended for production work with common geospatial libraries in the latest version of Python. By default, running the Docker image launches a [marimo](https://marimo.io/) notebook.
 
 To run it in your terminal:
 
@@ -40,7 +35,6 @@ docker run --name here-be-dragons-latest -p 8080:8080 ghcr.io/corbel-spatial/her
 ```
 
 ## 🔥 Next
-
 [![Next Python Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PYTHON_VER_NEXT%3D)(.*)&replace=%242&logo=python&logoColor=yellow&label=python&labelColor=steelblue&color=steelblue)](https://github.com/python/cpython/tags)
 [![Next Arrow Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(ARROW_VER_NEXT%3D)(.*)&replace=%242&logo=apache&logoColor=orange&label=%20&labelColor=mediumpurple&color=mediumpurple)](https://github.com/apache/arrow/tags)
 [![Next GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_NEXT%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](https://github.com/OSGeo/gdal/tags)
@@ -53,8 +47,7 @@ docker run --name here-be-dragons-latest -p 8080:8080 ghcr.io/corbel-spatial/her
 [![Pixi](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fprefix-dev%2Fpixi%2Fmain%2Fassets%2Fbadge%2Fv0.json&label=%E2%9C%A8)](https://pixi.sh)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
-This Docker image is the **experimental** version intended for testing the latest pre-release version of Python against
-Arrow, GDAL, GEOS, and PROJ.
+This Docker image is the **experimental** version intended for testing the latest pre-release version of Python against Arrow, GDAL, GEOS, and PROJ. 
 Failing builds might indicate that issues are on the horizon.
 Some extra packages (`mapclassify`, etc.) may not be included in this image.
 
@@ -68,7 +61,7 @@ docker run --name here-be-dragons-next -p 8080:8080 ghcr.io/corbel-spatial/here-
 - Create a benchmark suite and check new releases for performance regressions
 - Add more packages upon request - please open an issue!
 
-## 📚 References
+## 📚 References 
 
 | Project                                                                                           | Source                            | Downstream Packages                                                                                                |
 |:--------------------------------------------------------------------------------------------------|:----------------------------------|:-------------------------------------------------------------------------------------------------------------------|
