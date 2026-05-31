@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/OSGeo/PROJ/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/OSGeo/PROJ/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/OSGeo/PROJ/releases.atom"/>
+  <title>Tags from PROJ</title>
+  <updated>2026-04-10T12:56:28Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.8.1</id>
+    <updated>2026-04-10T13:08:17Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.8.1"/>
+    <title>PROJ 9.8.1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.8.0-1</id>
+    <updated>2026-03-08T16:51:28Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.8.0-1"/>
+    <title>9.8.0-1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.8.0</id>
+    <updated>2026-04-07T09:16:23Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.8.0"/>
+    <title>PROJ 9.8.0 (warning related to ETRS89)</title>
+    <content></content>
+    <author>
+      <name>kbevers</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/13132571?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.7.1</id>
+    <updated>2025-12-01T14:38:36Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.7.1"/>
+    <title>PROJ 9.7.1</title>
+    <content></content>
+    <author>
+      <name>kbevers</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/13132571?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.7.0</id>
+    <updated>2025-09-15T07:05:24Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.7.0"/>
+    <title>PROJ 9.7.0</title>
+    <content></content>
+    <author>
+      <name>kbevers</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/13132571?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.6.2</id>
+    <updated>2025-06-06T12:19:36Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.6.2"/>
+    <title>PROJ 9.6.2</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.6.2RC1</id>
+    <updated>2025-06-04T11:28:55Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.6.2RC1"/>
+    <title>9.6.2RC1</title>
+    <content></content>
+    <author>
+      <name>rouault</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/1192433?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.6.1</id>
+    <updated>2025-06-02T14:05:29Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.6.1"/>
+    <title>PROJ 9.6.1</title>
+    <content></content>
+    <author>
+      <name>kbevers</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/13132571?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.6.0</id>
+    <updated>2025-03-15T08:40:20Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.6.0"/>
+    <title>PROJ 9.6.0</title>
+    <content></content>
+    <author>
+      <name>kbevers</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/13132571?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/36057261/9.5.1</id>
+    <updated>2024-12-01T11:58:52Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/OSGeo/PROJ/releases/tag/9.5.1"/>
+    <title>PROJ 9.5.1</title>
+    <content></content>
+    <author>
+      <name>kbevers</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/13132571?s=60&amp;v=4"/>
+  </entry>
+</feed>

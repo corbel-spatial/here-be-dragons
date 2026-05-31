@@ -1,0 +1,64 @@
+name: Update Versions
+
+on:
+  schedule:
+    - cron: '0 20 * * 0' # Weekly on Sundays at 12:00 PM Pacific (20:00 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@v0.9.6
+        with:
+          cache: true
+
+      - name: Run version update script
+        run: pixi run update
+
+      - name: Commit changes and create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet versions.env; then
+            echo "No changes detected in versions.env."
+            exit 0
+          fi
+
+          echo "Changes detected in versions.env. Preparing pull request..."
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # commit changes to a dedicated branch
+          BRANCH_NAME="update-versions"
+          COMMIT_MSG='chore: update `versions.env` with new tags'
+          git checkout -b "$BRANCH_NAME"
+          git add versions.env
+          git commit -m "$COMMIT_MSG"
+          
+          # force push to update any existing PR
+          git push origin "$BRANCH_NAME" --force
+
+          # open a PR if one doesn't exist
+          PR_EXISTS=$(gh pr list --head "$BRANCH_NAME" --base main --json number --jq '.[0].number')
+          
+          if [ -z "$PR_EXISTS" ] || [ "$PR_EXISTS" = "null" ]; then
+            gh pr create \
+              --title "$COMMIT_MSG" \
+              --body "This is an automated pull request to update the version tags in \`versions.env\`." \
+              --head "$BRANCH_NAME" \
+              --base main
+            echo "Pull request created successfully."
+          else
+            echo "Pull request already exists for this branch: #$PR_EXISTS"
+          fi
