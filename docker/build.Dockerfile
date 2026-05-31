@@ -206,9 +206,10 @@ RUN python --version && pip --version
 
 # Pre-compile all Python modules to bytecode for faster first-import
 # Then pin runtime dependencies
-# Finally, purge build tools and strip symbols and remove build artifacts
+# Finally, purge build libraries and strip symbols and remove build artifacts
 RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.py" -type f 2>/dev/null) 2>/dev/null || true && \
     apt-get install -y --no-install-recommends \
+        build-essential \
         libcurl4 \
         libexpat1 \
         libgeotiff5 \
@@ -216,11 +217,13 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
         libpq5 \
         libssl3  \
         libtiff6 \
+        ninja-build \
+        pkg-config \
+        rustup \
         && \
     apt-get purge -y \
         autoconf \
         automake \
-        build-essential \
         cmake \
         libblas-dev \
         liblapack-dev \
@@ -233,9 +236,6 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
         libtool \
         libzstd-dev \
         lzma \
-        ninja-build \
-        pkg-config \
-        rustup \
         swig \
         tk-dev \
         zlib1g-dev \
