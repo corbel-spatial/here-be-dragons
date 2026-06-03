@@ -9,9 +9,6 @@ ARG NAMESPACE=localhost/
 
 FROM ${NAMESPACE}here-be-dragons:${BASE_IMAGE_TAG} AS build-python
 
-ARG PARALLEL
-ARG PYTHON_VER
-
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive
 WORKDIR $HOME
@@ -42,10 +39,14 @@ RUN apt update && \
         zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Flags: --enable-optimizations (PGO), --with-lto (Link-Time Optimization)
+ARG NOGIL
+ARG PARALLEL
+ARG PYTHON_VER
+
+# Flags: --enable-optimizations (PGO), --with-lto (Link-Time Optimization), optional --disable-gil (PEP 703)
 RUN git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython && \
     cd $HOME/cpython && \
-    ./configure --enable-optimizations --with-lto --enable-loadable-sqlite-modules && \
+    ./configure --enable-optimizations --with-lto --enable-loadable-sqlite-modules $NOGIL && \
     make -j $PARALLEL && \
     make install && \
     strip --strip-all /usr/local/bin/python* 2>/dev/null || true && \
