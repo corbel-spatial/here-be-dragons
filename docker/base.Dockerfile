@@ -95,10 +95,13 @@ ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive
 WORKDIR $HOME
 
-# Install runtime dependencies only (no build tools)
+# Install runtime dependencies and utilities (no build tools)
 RUN apt update && \
     apt install -y --no-install-recommends \
         ca-certificates \
+        curl \
+        emacs \
+        git \
         libcurl4 \
         libgdbm6 \
         libgeotiff5 \
@@ -112,8 +115,10 @@ RUN apt update && \
         libtiff6 \
         libzstd1 \
         lzma \
+        nano \
         sqlite3 \
         uuid-runtime \
+        vim \
         wget && \
     rm -rf /var/lib/apt/lists/*
 

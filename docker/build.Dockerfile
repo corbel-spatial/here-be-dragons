@@ -21,10 +21,7 @@ RUN apt update && \
         autoconf \
         automake \
         build-essential \
-        ca-certificates \
         cmake \
-        curl \
-        git \
         libffi-dev \
         libjpeg-dev \
         libncurses-dev \
