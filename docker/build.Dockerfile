@@ -177,7 +177,8 @@ RUN apt update && \
         liblapack-dev \
         libopenblas-dev && \
     rm -rf /var/lib/apt/lists/*
-RUN uv pip install --system geopandas packaging pandas pyogrio --no-binary :all:
+RUN uv pip install --system geopandas packaging pandas pyogrio --no-binary :all:  # fail if geopandas does not build
+RUN uv pip install --system geojson --no-binary geojson || echo "WARNING: geojson did not build"
 RUN uv pip install --system fiona --no-binary fiona || echo "WARNING: fiona did not build"
 RUN uv pip install --system geoalchemy2 --no-binary geoalchemy2 || echo "WARNING: geoalchemy2 did not build"
 RUN uv pip install --system geopy --no-binary geopy || echo "WARNING: geopy did not build"
