@@ -107,7 +107,9 @@ class Version:
     def __lt__(self, other: "Version") -> bool:
         return self._comparison_key() < other._comparison_key()
 
-    def __eq__(self, other: "Version") -> bool:
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
         return self._comparison_key() == other._comparison_key()
 
 
