@@ -3,8 +3,8 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
 
 [dependencies]
-python = ">=3.14.6,<3.15"
-python-dotenv = ">=1.2.2,<2"
+python = ">=3.14.7,<3.15"
+python-dotenv = ">=1.2.3,<2"
 semver = ">=3.0.4,<4"
 
 [environments]
@@ -22,7 +22,7 @@ update = "python scripts/update.py"
 
 [feature.docs]
 # dependencies should include everything in docs/requirements.txt
-dependencies = { "jupyter" = ">=1.1.1,<2", "myst-parser" = ">=5.1.0,<6", "nbsphinx" = ">=0.9.8,<0.10", "notebook" = ">=7.6.1,<8", "pydata-sphinx-theme" = ">=0.20.0,<0.21", "sphinx" = ">=9.1.0,<10", "sphinx-copybutton" = ">=0.5.2,<0.6" }
+dependencies = { "jupyter" = ">=1.1.1,<2", "myst-parser" = ">=5.1.0,<6", "nbsphinx" = ">=0.9.8,<0.10", "notebook" = ">=7.6.2,<8", "pydata-sphinx-theme" = ">=0.21.0,<0.22", "sphinx" = ">=9.1.0,<10", "sphinx-copybutton" = ">=0.5.2,<0.6" }
 platforms = ["linux-64"]
 tasks = { "docs" = "make -C docs html" }
 
@@ -30,11 +30,11 @@ tasks = { "docs" = "make -C docs html" }
 expat = ">=2.8.1,<3"
 geopandas = ">=1.1.4,<2"
 lonboard = ">=0.16.0,<0.17"
-marimo = ">=0.23.16,<0.24"
+marimo = ">=0.23.16,<0.25"
 pixi-pycharm = ">=0.0.12,<0.0.13"
 pytest = ">=9.1.1,<10"
 pytest-cov = ">=7.1.0,<8"
-ruff = ">=0.16.2,<0.17"
+ruff = ">=0.16.7,<0.17"
 
 [feature.dev.tasks]
 test = "pytest ./tests"
