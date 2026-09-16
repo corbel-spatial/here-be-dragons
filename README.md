@@ -55,11 +55,35 @@ Some extra packages (`mapclassify`, etc.) may not be included in this image.
 docker run --name here-be-dragons-next -p 8080:8080 ghcr.io/corbel-spatial/here-be-dragons:next
 ```
 
+## ⚡ Nogil (Free-Threaded)
+[![Latest Python Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PYTHON_VER_LATEST%3D)(.*)&replace=%242&logo=python&logoColor=yellow&label=python&labelColor=steelblue&color=steelblue)](https://github.com/python/cpython/tags)
+[![Latest Arrow Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(ARROW_VER_LATEST%3D)(.*)&replace=%242&logo=apache&logoColor=orange&label=%20&labelColor=mediumpurple&color=mediumpurple)](https://github.com/apache/arrow/releases)
+[![Latest GDAL Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GDAL_VER_LATEST%3D)(.*)&replace=%242&logo=gdal&logoColor=darkgreen&label=GDAL&labelColor=mediumseagreen&color=mediumseagreen)](https://github.com/OSGeo/gdal/releases)
+[![GEOS Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(GEOS_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=GEOS&labelColor=slategray&color=slategray)](https://github.com/libgeos/geos/releases)
+[![PROJ Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(PROJ_VER%3D)(.*)&replace=%242&logo=osgeo&logoColor=green&label=PROJ&labelColor=slategray&color=slategray)](https://github.com/OSGeo/PROJ/releases)
+
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/corbel-spatial/here-be-dragons/build-nogil.yml?branch=main)](https://github.com/corbel-spatial/here-be-dragons/actions/workflows/build-nogil.yml?query=branch%3Amain)
+[![Ubuntu Version](https://img.shields.io/docker/v/_/ubuntu/rolling?logo=ubuntu&logoColor=white&label=ubuntu&labelColor=tomato&color=tomato)](https://hub.docker.com/_/ubuntu)
+[![Marimo Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcorbel-spatial%2Fhere-be-dragons%2Frefs%2Fheads%2Fmain%2Fversions.env&search=(MARIMO_VER%3D)(.*)&replace=%242&label=%F0%9F%8D%83%20%20marimo&labelColor=darkgreen&color=darkgreen)](https://github.com/marimo-team/marimo/releases)
+[![Pixi](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fprefix-dev%2Fpixi%2Fmain%2Fassets%2Fbadge%2Fv0.json&label=%E2%9C%A8)](https://pixi.sh)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+
+This Docker image is built with **free-threaded Python** ([PEP 703](https://peps.python.org/pep-0703/), `--disable-gil`) for concurrent multi-threaded spatial data processing without the Global Interpreter Lock.
+
+To run it in your terminal:
+
+```shell
+docker run --name here-be-dragons-nogil -p 8080:8080 ghcr.io/corbel-spatial/here-be-dragons:nogil
+```
+
+> [!TIP]
+> To prevent non-ported extension modules from re-enabling the GIL at runtime, run with `-e PYTHON_GIL=0`.
+
 ## 🚧 To-do List
 
-- Add variants built with freethreaded Python (`--disable-gil`)
-- Create a benchmark suite and check new releases for performance regressions
-- Add more packages upon request - please open an issue!
+- [x] Add variants built with freethreaded Python (`--disable-gil`)
+- [ ] Create a benchmark suite and check new releases for performance regressions
+- [ ] Add more packages upon request - please open an issue!
 
 ## 📚 References 
 

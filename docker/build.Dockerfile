@@ -6,6 +6,7 @@
 
 ARG BASE_IMAGE_TAG=base
 ARG NAMESPACE=localhost/
+ARG GIL=1
 
 FROM ${NAMESPACE}here-be-dragons:${BASE_IMAGE_TAG} AS build-python
 
@@ -42,11 +43,13 @@ RUN apt update && \
 # Flags: --enable-optimizations (PGO), --with-lto (Link-Time Optimization)
 RUN git clone --depth 1 --branch $PYTHON_VER --single-branch https://github.com/python/cpython && \
     cd $HOME/cpython && \
-    ./configure --enable-optimizations --with-lto --enable-loadable-sqlite-modules && \
+    ./configure --enable-optimizations --with-lto $([ "${GIL:-1}" = "0" ] && echo "--disable-gil --with-mimalloc") --enable-loadable-sqlite-modules && \
     make -j $PARALLEL && \
     make install && \
+    ([ -f /usr/local/bin/python3 ] || ln -sf /usr/local/bin/python3*t /usr/local/bin/python3) && \
+    ([ -f /usr/local/bin/pip3 ] || ln -sf /usr/local/bin/pip3*t /usr/local/bin/pip3 2>/dev/null || true) && \
     strip --strip-all /usr/local/bin/python* 2>/dev/null || true && \
-    strip --strip-all /usr/local/lib/libpython*.so* 2>/dev/null || true && \
+    strip --strip-unneeded /usr/local/lib/libpython*.so* 2>/dev/null || true && \
     cd / && \
     rm -rf $HOME/cpython $HOME/.cache
 
@@ -95,7 +98,7 @@ RUN git clone --depth 1 --branch $GDAL_VER --single-branch https://github.com/OS
         -DCMAKE_CXX_FLAGS_RELEASE="-g0" && \
     ninja -j $PARALLEL install && \
     ldconfig && \
-    find /usr/local/lib -name "libgdal*" -exec strip --strip-all {} \; 2>/dev/null || true && \
+    find /usr/local/lib -name "libgdal*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
     find /usr/local/bin -name "gdal*" -exec strip --strip-all {} \; 2>/dev/null || true && \
     cd / && \
     rm -rf $HOME/gdal $HOME/.cache
@@ -152,7 +155,7 @@ RUN git clone --depth 1 --branch $ARROW_VER --single-branch https://github.com/a
         --preset ninja-release-python && \
     ninja -j $PARALLEL install && \
     ldconfig && \
-    strip --strip-all /usr/local/lib/libarrow* 2>/dev/null || true && \
+    strip --strip-unneeded /usr/local/lib/libarrow* 2>/dev/null || true && \
     cd $ARROW_DIR/python && \
     uv pip install --system --no-cache-dir . && \
     cd / && \
@@ -249,13 +252,16 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
     find /usr/local/lib -type d -name "cmake" -exec rm -rf {} + 2>/dev/null || true
 
 # Verify all key libraries
+# NOTE: on a freethreaded (GIL=0) build these imports also confirm the extension
+# modules are free-threading safe; add || echo WARNING where upstream support is not yet complete.
 RUN ldconfig && \
     python -c "import pyproj" && \
     python -c "import shapely" && \
     python -c "from osgeo import gdal" && \
     python -c "import pyarrow" && \
     python -c "import geoarrow.pyarrow" && \
-    python -c "import marimo"
+    python -c "import marimo" && \
+    python -c "import sysconfig, sys; gil_disabled = str(sysconfig.get_config_var('Py_GIL_DISABLED')) == '1'; expected_disabled = ('${GIL:-1}' == '0'); sys.exit(0 if gil_disabled == expected_disabled else 1)"
 
 # Set up userspace
 ENV PYTHONDONTWRITEBYTECODE=1

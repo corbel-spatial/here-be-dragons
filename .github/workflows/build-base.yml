@@ -8,6 +8,7 @@ on:
       - .github/workflows/build-base.yml
       - .github/workflows/build-next.yml
       - .github/workflows/build-latest.yml
+      - .github/workflows/build-nogil.yml
       - versions.env
       - docker/base.Dockerfile
       - docker/build.Dockerfile

@@ -1,0 +1,123 @@
+name: Build Nogil Image
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [ Build Base Image ]
+    types: [ completed ]
+
+env:
+  IMAGE_NAME: corbel-spatial/here-be-dragons
+  REGISTRY: ghcr.io
+
+jobs:
+  build-nogil-matrix:
+    if: >
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+            suffix: "-amd64"
+          - arch: arm64
+            runner: ubuntu-latest-arm64
+            suffix: "-arm64"
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Load versions
+        run: |
+          set -a; source versions.env; set +a
+          echo "ARROW_VER_LATEST=$ARROW_VER_LATEST" >> $GITHUB_ENV
+          echo "GDAL_VER_LATEST=$GDAL_VER_LATEST" >> $GITHUB_ENV
+          echo "MARIMO_VER=$MARIMO_VER" >> $GITHUB_ENV
+          echo "PYTHON_VER_LATEST=$PYTHON_VER_LATEST" >> $GITHUB_ENV
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "LATEST_TAG_SHORT=$LATEST_TAG_SHORT" >> $GITHUB_ENV
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Wait for base image to be available
+        run: |
+          REGISTRY="${{ env.REGISTRY }}"
+          IMAGE_NAME="${{ env.IMAGE_NAME }}"
+          BASE_IMAGE="${REGISTRY}/${IMAGE_NAME}:base${{ matrix.suffix }}"
+          
+          echo "Waiting for base image: ${BASE_IMAGE}"
+          MAX_RETRIES=60
+          RETRY_DELAY=5
+          
+          for i in $(seq 1 $MAX_RETRIES); do
+            if docker pull "${BASE_IMAGE}" &>/dev/null; then
+              echo "✅ Base image available. Proceeding with build."
+              exit 0
+            fi
+            if [ $i -eq $MAX_RETRIES ]; then
+              echo "❌ Timeout waiting for base image after $(($MAX_RETRIES * $RETRY_DELAY))s"
+              exit 1
+            fi
+            echo "Attempt $i/$MAX_RETRIES: Base image not yet available. Waiting..."
+            sleep $RETRY_DELAY
+          done
+      - uses: docker/build-push-action@v7
+        with:
+          context: ./docker
+          file: ./docker/build.Dockerfile
+          push: true
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-nogil${{ matrix.suffix }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-nogil${{ matrix.suffix }},mode=max
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:nogil${{ matrix.suffix }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:py${{ env.LATEST_TAG }}t${{ matrix.suffix }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:py${{ env.LATEST_TAG_SHORT }}t${{ matrix.suffix }}
+          build-args: |
+            BASE_IMAGE_TAG=base${{ matrix.suffix }}
+            ARROW_VER=${{ env.ARROW_VER_LATEST }}
+            GDAL_VER=${{ env.GDAL_VER_LATEST }}
+            MARIMO_VER=${{ env.MARIMO_VER }}
+            PARALLEL=8
+            PYTHON_VER=${{ env.PYTHON_VER_LATEST }}
+            GIL=0
+            NAMESPACE=${{ env.REGISTRY }}/corbel-spatial/
+
+  build-nogil-manifest:
+    needs: build-nogil-matrix
+    if: >
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Load versions
+        run: |
+          set -a; source versions.env; set +a
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          echo "LATEST_TAG_SHORT=$LATEST_TAG_SHORT" >> $GITHUB_ENV
+      - name: Create and push multi-arch manifests
+        run: |
+          REGISTRY="${{ env.REGISTRY }}"
+          IMAGE_NAME="${{ env.IMAGE_NAME }}"
+          AMD64="${REGISTRY}/${IMAGE_NAME}:nogil-amd64"
+          ARM64="${REGISTRY}/${IMAGE_NAME}:nogil-arm64"
+          
+          # Create manifests for nogil and free-threaded version tags
+          for TAG in nogil py${{ env.LATEST_TAG }}t py${{ env.LATEST_TAG_SHORT }}t; do
+            echo "Creating manifest for ${TAG}..."
+            docker buildx imagetools create -t "${REGISTRY}/${IMAGE_NAME}:${TAG}" "${AMD64}" "${ARM64}"
+            echo "✅ Created manifest for ${TAG}"
+          done

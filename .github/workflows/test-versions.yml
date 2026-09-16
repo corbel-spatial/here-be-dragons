@@ -2,7 +2,7 @@ name: Test Image Versions
 
 on:
   workflow_run:
-    workflows: [ "Build Latest Image", "Build Next Image" ]
+    workflows: [ "Build Latest Image", "Build Next Image", "Build Nogil Image" ]
     types:
       - completed
   workflow_dispatch:
@@ -13,6 +13,11 @@ jobs:
     permissions:
       packages: read
       actions: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }}
     
     steps:
       - name: Checkout code
@@ -20,9 +25,6 @@ jobs:
 
       - name: Evaluate Workflow Statuses
         id: evaluate
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo "Manual trigger detected. Proceeding to tests."
@@ -38,6 +40,7 @@ jobs:
 
           LATEST_JSON=$(get_run_data "Build Latest Image")
           NEXT_JSON=$(get_run_data "Build Next Image")
+          NOGIL_JSON=$(get_run_data "Build Nogil Image")
 
           LATEST_STATUS=$(echo "$LATEST_JSON" | jq -r '.status // "null"')
           LATEST_CONCLUSION=$(echo "$LATEST_JSON" | jq -r '.conclusion // "null"')
@@ -45,16 +48,28 @@ jobs:
           NEXT_STATUS=$(echo "$NEXT_JSON" | jq -r '.status // "null"')
           NEXT_CONCLUSION=$(echo "$NEXT_JSON" | jq -r '.conclusion // "null"')
 
+          NOGIL_STATUS=$(echo "$NOGIL_JSON" | jq -r '.status // "null"')
+          NOGIL_CONCLUSION=$(echo "$NOGIL_JSON" | jq -r '.conclusion // "null"')
+
           echo "Build Latest Image -> Status: $LATEST_STATUS, Conclusion: $LATEST_CONCLUSION"
           echo "Build Next Image   -> Status: $NEXT_STATUS, Conclusion: $NEXT_CONCLUSION"
+          echo "Build Nogil Image  -> Status: $NOGIL_STATUS, Conclusion: $NOGIL_CONCLUSION"
 
-          if [[ "$LATEST_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]] || [[ "$NEXT_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]]; then
+          for STATUS in "$LATEST_STATUS" "$NEXT_STATUS" "$NOGIL_STATUS"; do
+            if [ "$STATUS" = "null" ] || [ -z "$STATUS" ]; then
+              echo "A dependent workflow has not reported a status yet. Skipping tests for now."
+              echo "run_tests=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done
+
+          if [[ "$LATEST_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]] || [[ "$NEXT_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]] || [[ "$NOGIL_CONCLUSION" =~ ^(failure|cancelled|startup_failure)$ ]]; then
              echo "A dependent workflow failed. Aborting tests."
              echo "run_tests=false" >> "$GITHUB_OUTPUT"
              exit 0
           fi
 
-          if [[ "$LATEST_STATUS" =~ ^(in_progress|queued)$ ]] || [[ "$NEXT_STATUS" =~ ^(in_progress|queued)$ ]]; then
+          if [[ "$LATEST_STATUS" =~ ^(in_progress|queued)$ ]] || [[ "$NEXT_STATUS" =~ ^(in_progress|queued)$ ]] || [[ "$NOGIL_STATUS" =~ ^(in_progress|queued)$ ]]; then
              echo "A dependent workflow is still running. Skipping tests for now."
              echo "run_tests=false" >> "$GITHUB_OUTPUT"
              exit 0
@@ -68,16 +83,20 @@ jobs:
         run: |
           set -a; source versions.env; set +a
           
-          IMAGE_LATEST="ghcr.io/corbel-spatial/here-be-dragons:latest"
-          IMAGE_NEXT="ghcr.io/corbel-spatial/here-be-dragons:next"
+          IMAGE_LATEST="${REGISTRY}/${IMAGE_NAME}:latest"
+          IMAGE_NEXT="${REGISTRY}/${IMAGE_NAME}:next"
+          IMAGE_NOGIL="${REGISTRY}/${IMAGE_NAME}:nogil"
           
           echo "Pulling images..."
           docker pull $IMAGE_LATEST
           docker pull $IMAGE_NEXT
+          docker pull $IMAGE_NOGIL
 
           # Helper function to run tests in a single container spin-up
           test_image() {
             local IMAGE=$1
+            # test_image IMAGE GEOS_VERSION PROJ_VERSION GDAL_VERSION ARROW_VERSION PY_VERSION GIL_FLAG
+            local EXPECTED_GIL="${7:-false}"
           
             # strip letters or hyphens from the start of the version strings
             local EXPECTED_GEOS=$(echo "$2" | sed 's/^[a-zA-Z-]*//')
@@ -96,9 +115,29 @@ jobs:
               -e EXPECTED_GDAL="$EXPECTED_GDAL" \
               -e EXPECTED_ARROW="$EXPECTED_ARROW" \
               -e EXPECTED_PYTHON="$EXPECTED_PYTHON" \
+              -e EXPECTED_GIL="$EXPECTED_GIL" \
               "$IMAGE" bash << 'EOF'
           
             CONTAINER_FAILED=0
+
+            # On a freethreaded (no-GIL) build, assert the Python interpreter is
+            # actually compiled without the global interpreter lock, and that the
+            # bundled GIL libs still import without re-enabling the GIL.
+            if [ "$EXPECTED_GIL" = "true" ]; then
+              PY_GILFLAG=$(python -c "import sysconfig; print(str(sysconfig.get_config_var('Py_GIL_DISABLED')))")
+              PY_ISGIL=$(python -c "import sys; print(str(sys._is_gil_enabled()))")
+              if [[ "$PY_GILFLAG" != "1" ]] || [[ "$PY_ISGIL" != "False" ]]; then
+                echo "❌ no-GIL assertion failed: Py_GIL_DISABLED=$PY_GILFLAG, _is_gil_enabled=$PY_ISGIL"; CONTAINER_FAILED=1
+              else
+                echo "✅ no-GIL build verified (Py_GIL_DISABLED=$PY_GILFLAG, _is_gil_enabled=$PY_ISGIL)"
+              fi
+              python -c "import pyproj, sys; print(f'  pyproj imported (GIL re-enabled: {sys._is_gil_enabled()})')" || { echo "❌ pyproj import failed under no-GIL"; CONTAINER_FAILED=1; }
+              python -c "import shapely, sys; print(f'  shapely imported (GIL re-enabled: {sys._is_gil_enabled()})')" || { echo "❌ shapely import failed under no-GIL"; CONTAINER_FAILED=1; }
+              python -c "from osgeo import gdal; import sys; print(f'  gdal imported (GIL re-enabled: {sys._is_gil_enabled()})')" || { echo "❌ gdal import failed under no-GIL"; CONTAINER_FAILED=1; }
+              python -c "import pyarrow, sys; print(f'  pyarrow imported (GIL re-enabled: {sys._is_gil_enabled()})')" || { echo "❌ pyarrow import failed under no-GIL"; CONTAINER_FAILED=1; }
+              python -c "import geoarrow.pyarrow, sys; print(f'  geoarrow imported (GIL re-enabled: {sys._is_gil_enabled()})')" || { echo "❌ geoarrow import failed under no-GIL"; CONTAINER_FAILED=1; }
+              python -c "import marimo, sys; print(f'  marimo imported (GIL re-enabled: {sys._is_gil_enabled()})')" || { echo "❌ marimo import failed under no-GIL"; CONTAINER_FAILED=1; }
+            fi
 
             BASH_PYTHON=$(python --version 2>&1 | awk '{print $2}')
             BASH_PYTHON3=$(python3 --version 2>&1 | awk '{print $2}')          
@@ -142,8 +181,10 @@ jobs:
           OVERALL_FAILED=0
 
           # Execute tests (the || captures the exit 1 from the container without stopping the script immediately)
-          test_image "$IMAGE_LATEST" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_LATEST" "$ARROW_VER_LATEST" "$PYTHON_VER_LATEST" || OVERALL_FAILED=1
-          test_image "$IMAGE_NEXT" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_NEXT" "$ARROW_VER_NEXT" "$PYTHON_VER_NEXT" || OVERALL_FAILED=1
+          # test_image IMAGE EXPECTED_GEOS EXPECTED_PROJ EXPECTED_GDAL EXPECTED_ARROW EXPECTED_PYTHON GIL_FLAG
+          test_image "$IMAGE_LATEST" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_LATEST" "$ARROW_VER_LATEST" "$PYTHON_VER_LATEST" "false" || OVERALL_FAILED=1
+          test_image "$IMAGE_NEXT" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_NEXT" "$ARROW_VER_NEXT" "$PYTHON_VER_NEXT" "false" || OVERALL_FAILED=1
+          test_image "$IMAGE_NOGIL" "$GEOS_VER" "$PROJ_VER" "$GDAL_VER_LATEST" "$ARROW_VER_LATEST" "$PYTHON_VER_LATEST" "true" || OVERALL_FAILED=1
 
           echo "========================================"
           if [ "$OVERALL_FAILED" -ne 0 ]; then

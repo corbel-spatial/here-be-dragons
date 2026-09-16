@@ -81,8 +81,8 @@ RUN git clone --depth 1 --branch $PROJ_VER --single-branch https://github.com/OS
     cd / && \
     rm -rf /var/cache/proj $HOME/PROJ $HOME/.cache/pip
 
-RUN strip --strip-all /usr/local/lib/*.so* /usr/local/lib/lib*.a 2>/dev/null || true && \
-    strip --strip-all /usr/local/bin/* 2>/dev/null || true && \
+RUN strip --strip-unneeded /usr/local/lib/*.so* 2>/dev/null || true && \
+    strip --strip-all /usr/local/lib/lib*.a /usr/local/bin/* 2>/dev/null || true && \
     find /usr/local/lib -name "*.a" -delete
 
 # ============================================================================
@@ -127,8 +127,8 @@ COPY --from=base-builder /usr/local/bin /usr/local/bin
 COPY --from=base-builder /usr/local/share/proj /usr/local/share/proj
 COPY --from=base-builder /usr/local/include /usr/local/include
 
-RUN strip --strip-all /usr/local/lib/*.so* /usr/local/bin/* 2>/dev/null || true && \
-    strip --strip-unneeded /usr/local/lib/*.so* /usr/local/bin/* 2>/dev/null || true && \
+RUN strip --strip-unneeded /usr/local/lib/*.so* 2>/dev/null || true && \
+    strip --strip-all /usr/local/bin/* 2>/dev/null || true && \
     ldconfig && \
     geos-config --version && \
     projinfo 2>&1 | head -n 1

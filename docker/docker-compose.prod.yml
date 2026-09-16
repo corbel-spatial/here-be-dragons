@@ -13,6 +13,13 @@ services:
       cache_to:
         - type=registry,ref=${NAMESPACE}here-be-dragons:buildcache-latest${ARCH_SUFFIX:-},mode=max
 
+  nogil:
+    build:
+      cache_from:
+        - type=registry,ref=${NAMESPACE}here-be-dragons:buildcache-nogil${ARCH_SUFFIX:-}
+      cache_to:
+        - type=registry,ref=${NAMESPACE}here-be-dragons:buildcache-nogil${ARCH_SUFFIX:-},mode=max
+
   next:
     build:
       cache_from:

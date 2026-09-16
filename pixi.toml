@@ -15,8 +15,10 @@ docs = { features = ["docs"], solve-group = "docs" }
 [tasks]
 build-base = "docker context use default && docker compose --project-directory docker --env-file versions.env --progress plain build base"
 build-latest = { cmd = "docker compose --project-directory docker --env-file versions.env --progress plain build latest", depends-on = ["build-base"] }
+build-nogil = { cmd = "docker compose --project-directory docker --env-file versions.env --progress plain build nogil", depends-on = ["build-base"] }
 build-next = { cmd = "docker compose --project-directory docker --env-file versions.env --progress plain build next", depends-on = ["build-base"] }
 latest = "docker run --rm --name here-be-dragons-latest -p 8080:8080 localhost/here-be-dragons:latest"
+nogil = "docker run --rm --name here-be-dragons-nogil -p 8080:8080 localhost/here-be-dragons:nogil"
 next = "docker run --rm --name here-be-dragons-next -p 8080:8080 localhost/here-be-dragons:next"
 update = "python scripts/update.py"
 
