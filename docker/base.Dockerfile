@@ -106,6 +106,7 @@ RUN apt update && \
         libgdbm6 \
         libgeotiff5 \
         libgif7 \
+        liblzma5 \
         libjpeg-turbo8 \
         libopenblas0 \
         libpng16-16 \
