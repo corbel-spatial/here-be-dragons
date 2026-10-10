@@ -5,8 +5,13 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/docker" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/scripts" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/.pixi/envs/dev" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/.pixi/envs/dev/DLLs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/.pixi/envs/dev/Lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/.pixi/envs/dev/Lib/site-packages" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.pixi/envs/default" />
       <excludeFolder url="file://$MODULE_DIR$/.pixi/envs/dev" />
+      <excludeFolder url="file://$MODULE_DIR$/.pixi" />
     </content>
     <orderEntry type="jdk" jdkName="dev (here-be-dragons)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

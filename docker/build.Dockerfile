@@ -31,7 +31,7 @@ RUN apt update && \
         libssl-dev \
         libtool \
         libzstd-dev \
-        lzma \
+        liblzma-dev \
         ninja-build \
         pkg-config \
         sqlite3 \
@@ -211,6 +211,7 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
         libcurl4 \
         libexpat1 \
         libgeotiff5 \
+        liblzma5 \
         libpng16-16 \
         libpq5 \
         libssl3  \
@@ -225,6 +226,7 @@ RUN python3 -m py_compile $(find /usr/local/lib/python*/site-packages -name "*.p
         cmake \
         libblas-dev \
         liblapack-dev \
+        liblzma-dev \
         libffi-dev \
         libncurses-dev \
         libopenblas-dev \
