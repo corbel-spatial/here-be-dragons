@@ -1,11 +1,12 @@
 import json
 import tempfile
 import urllib.request
-import xml.etree.ElementTree as ET  # noqa
+import xml.etree.ElementTree as ET
+from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import total_ordering
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import dotenv
 import semver
@@ -107,7 +108,7 @@ class Version:
     def __lt__(self, other: "Version") -> bool:
         return self._comparison_key() < other._comparison_key()
 
-    def __eq__(self, other):
+    def __eq__(self, other: _comparison_key):
         if not isinstance(other, self.__class__):
             return False
         return self._comparison_key() == other._comparison_key()
@@ -202,8 +203,8 @@ class Package:
         versions: list[Version] = []
         for entry in root.findall("atom:entry", namespaces):
             link = entry.find("atom:link", namespaces)
-            href = link.get("href")  # noqa
-            tag = href.split("/")[-1]  # noqa
+            href = link.get("href")
+            tag = href.split("/")[-1]
             versions.append(
                 Version(
                     s=tag,
@@ -227,22 +228,14 @@ class Package:
 
     def write_env(self, fp) -> None:
         """Write the object's versions to the supplied fp"""
-        if self.requires_next:
+
+        if self.name == "PYTHON":
             dotenv.set_key(
                 fp,
                 f"{self.name}_VER_LATEST",
                 str(self.latest_version),
                 quote_mode="never",
             )
-            dotenv.set_key(
-                fp, f"{self.name}_VER_NEXT", str(self.next_version), quote_mode="never"
-            )
-        else:
-            dotenv.set_key(
-                fp, f"{self.name}_VER", str(self.latest_version), quote_mode="never"
-            )
-
-        if self.name == "PYTHON":
             dotenv.set_key(
                 fp,
                 "LATEST_TAG",
@@ -256,23 +249,67 @@ class Package:
                 quote_mode="never",
             )
 
-            assert isinstance(self.next_version, Version)
-            dotenv.set_key(
-                fp,
-                "NEXT_TAG",
-                f"{self.next_version.major}.{self.next_version.minor}.{self.next_version.patch}{self.next_version.suffix}",
-                quote_mode="never",
-            )
-            dotenv.set_key(
-                fp,
-                "NEXT_TAG_SHORT",
-                f"{self.next_version.major}.{self.next_version.minor}",
-                quote_mode="never",
-            )
+            if self.next_version.suffix is None:
+                dotenv.set_key(
+                    fp,
+                    f"{self.name}_VER_NEXT",
+                    "main",
+                    quote_mode="never",
+                )
+                dotenv.set_key(
+                    fp,
+                    "NEXT_TAG",
+                    f"{self.next_version.major}.{self.next_version.minor + 1}.0-dev",
+                    quote_mode="never",
+                )
+                dotenv.set_key(
+                    fp,
+                    "NEXT_TAG_SHORT",
+                    f"{self.next_version.major}.{self.next_version.minor + 1}",
+                    quote_mode="never",
+                )
+            else:
+                dotenv.set_key(
+                    fp,
+                    f"{self.name}_VER_NEXT",
+                    str(self.next_version),
+                    quote_mode="never",
+                )
+                dotenv.set_key(
+                    fp,
+                    "NEXT_TAG",
+                    f"{self.next_version.major}.{self.next_version.minor}.{self.next_version.patch}{self.next_version.suffix}",
+                    quote_mode="never",
+                )
+                dotenv.set_key(
+                    fp,
+                    "NEXT_TAG_SHORT",
+                    f"{self.next_version.major}.{self.next_version.minor}",
+                    quote_mode="never",
+                )
+
+        else:
+            if self.requires_next:
+                dotenv.set_key(
+                    fp,
+                    f"{self.name}_VER_LATEST",
+                    str(self.latest_version),
+                    quote_mode="never",
+                )
+                dotenv.set_key(
+                    fp,
+                    f"{self.name}_VER_NEXT",
+                    str(self.next_version),
+                    quote_mode="never",
+                )
+            else:
+                dotenv.set_key(
+                    fp, f"{self.name}_VER", str(self.latest_version), quote_mode="never"
+                )
 
 
 def _parse_configs_versions_env(configs, vers) -> list[Package]:
-    packages: list[Package] = list()
+    packages: list[Package] = []
     for config in configs.values():
         pkg = Package(config, vers)
         packages.append(pkg)

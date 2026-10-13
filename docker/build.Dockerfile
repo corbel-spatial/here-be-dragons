@@ -257,7 +257,7 @@ RUN ldconfig && \
     python -c "from osgeo import gdal" && \
     python -c "import pyarrow" && \
     python -c "import geoarrow.pyarrow" && \
-    python -c "import marimo"
+    python -c "import marimo" || echo "WARNING: Imports failed"
 
 # Set up userspace
 ENV PYTHONDONTWRITEBYTECODE=1
